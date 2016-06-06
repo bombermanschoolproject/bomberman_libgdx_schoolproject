@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Bomberman extends Game{
 
-	public SpriteBatch batch;
+    public SpriteBatch batch;
     public BitmapFont font;
 	
 	@Override

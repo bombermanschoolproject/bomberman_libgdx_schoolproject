@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.view.Multiplayer;
 
 public class MainMenu implements Screen{
 
@@ -30,8 +29,8 @@ public class MainMenu implements Screen{
 //    	this.exit1=new Texture("");
 //    	this.exit2=new Texture("");
     	
-    	this.mparea = new Rectangle(651,420,626,98);
-    	this.exitarea = new Rectangle(651,540,626,98);
+    	//this.mparea = new Rectangle(651,420,626,98);
+    	//this.exitarea = new Rectangle(651,540,626,98);
     }
     
 	@Override
