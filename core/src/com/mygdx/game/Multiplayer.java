@@ -74,7 +74,7 @@ public class Multiplayer implements Screen {
 	 camera.update();
 	
 	 testfigure = new Figure(1, 1, 3, 0, 1, 2, false);
-	 textfigure = new Texture("figur.png");
+	 textfigure = new Texture("P1_Down.png");
 	 sprite = new Sprite(textfigure);
 	 tiledMapRenderer.addSprite(sprite);
 	 sprite.setPosition(testfigure.getX()*16, testfigure.getY()*16);
