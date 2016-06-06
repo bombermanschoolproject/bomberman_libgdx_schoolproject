@@ -1,17 +1,16 @@
 package com.mygdx.game.model;
 
-import com.mygdx.game.model.Figure.Direction;
-import com.mygdx.game.model.Figure.State;
-
 public class Figure {
 	
 	private int x;
 	private int y;
 	private int lives;
-	private int speed;
+//	private int speed;
 	private int bombs;
 	private int bombRange;
 	private boolean kickable;
+	private State currState;
+	private Direction directionState;
 	
 	public enum Direction{
 		LEFT, RIGHT, UP, DOWN
@@ -20,13 +19,13 @@ public class Figure {
 		WALKING, DEAD, IDLE
 	}
 	
-	public Figure(int x, int y, int lives, int speed, int bombs, int bombRange, boolean kickable){
+	public Figure(int x, int y, int lives, int bombs, int bombRange, boolean kickable){
 		this.x=x;
 		this.y=y;
 		this.lives=lives;
 		this.bombs=bombs;
 		this.bombRange=bombRange;
-		this.speed=speed;
+//		this.speed=speed;
 		this.kickable=kickable;
 	}
 
@@ -54,13 +53,13 @@ public class Figure {
 		this.lives = lives;
 	}
 
-	public int getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
+//	public int getSpeed() {
+//		return speed;
+//	}
+//
+//	public void setSpeed(int speed) {
+//		this.speed = speed;
+//	}
 
 	public int getBombs() {
 		return bombs;
@@ -93,22 +92,20 @@ public class Figure {
 		return false;
 	}
 
-	public int getVelocity1() {
-		return speed;
+	public void setDirection(Direction d) {
+		directionState=d;
+	}
+	
+	public Direction getDirection(){
+		return directionState;
 	}
 
-	public Object getVelocity() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setState(State state) {
+		currState=state;
 	}
-
-	public void setDirection(Direction down, boolean b) {
-		
-	}
-
-	public void setState(State walking) {
-		// TODO Auto-generated method stub
-		
+	
+	public State getState(){
+		return currState;
 	}
 	
 	
