@@ -31,6 +31,8 @@ public class Multiplayer implements Screen {
 	
 	 Figure testfigure;
 	 Texture textfigure;
+	 
+	 CollisionDetection coll;
 	
 	 int mapWidth;
 	 int mapHeight;
@@ -58,6 +60,7 @@ public class Multiplayer implements Screen {
 	
 	 tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
 	 tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
+	 coll = new CollisionDetection(tiledMap);
 	 
 	 tiledSet = tiledMap.getTileSets();
 	
@@ -74,6 +77,8 @@ public class Multiplayer implements Screen {
 	 camera.setToOrtho(false,mapPixelWidth,mapPixelHeight);
 	 camera.update();
 	
+	 testfigure = new Figure(1, 1, 3, 1, 2, false);
+	 textfigure = new Texture("P1_Down.png");
 
 	 sprite = new Sprite(textfigure);
 	 tiledMapRenderer.addSprite(sprite);
@@ -182,6 +187,7 @@ public class Multiplayer implements Screen {
 		tiledMapRenderer.render();
 		getInputPlayer1();
 		sprite.setPosition(testfigure.getX()*16, testfigure.getY()*16);
+		//coll.detect();
 	}
 
 }
