@@ -108,5 +108,24 @@ public class Figure {
 		return currState;
 	}
 	
+	public void moveRight() {
+		if(x < 17)
+			x++;
+	}
+	
+	public void moveLeft() {
+		if(x > 1)
+			x--;
+	}
+	
+	public void moveUp() {
+		if(y < 17)
+			y++;
+	}
+	
+	public void moveDown() {
+		if (y > 1)
+			y--;
+	}
 	
 }
