@@ -107,16 +107,32 @@ public class Multiplayer implements Screen {
 
 	 protected void getInputPlayer1() {
 	 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
-	 testfigure.moveUp();
+		 boolean allowed = false;
+		 allowed = coll.detect(testfigure.getX(), testfigure.getY()+1);
+		 
+		 if (allowed == false)
+			 testfigure.moveUp();
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-	 testfigure.moveLeft();
+		 boolean allowed = false;
+		 allowed = coll.detect(testfigure.getX()-1, testfigure.getY());
+		 
+		 if (allowed == false)
+			 testfigure.moveLeft();
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-	 testfigure.moveRight();
+		 boolean allowed = false;
+		 allowed = coll.detect(testfigure.getX()+1, testfigure.getY());
+		 
+		 if (allowed == false)
+			 testfigure.moveRight();
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-	 testfigure.moveDown();
+		 boolean allowed = false;
+		 allowed = coll.detect(testfigure.getX(), testfigure.getY()-1);
+		 
+		 if (allowed == false)
+			 testfigure.moveDown();
 	 }
 	 }
 	//
@@ -186,6 +202,7 @@ public class Multiplayer implements Screen {
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 		getInputPlayer1();
+		
 		sprite.setPosition(testfigure.getX()*16, testfigure.getY()*16);
 		//coll.detect();
 	}

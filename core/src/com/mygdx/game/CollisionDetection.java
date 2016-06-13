@@ -6,7 +6,10 @@ import java.util.Properties;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 
 public class CollisionDetection {
 	private TiledMap map;
@@ -15,12 +18,22 @@ public class CollisionDetection {
         this.map = map;
     }
 	
-	public boolean detect() {
-		for (MapLayer layer : map.getLayers()) {
+	public boolean detect(int posx, int posy) {
+		boolean hit = false;
+		
+		for (RectangleMapObject r : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
 
-			MapProperties prop = layer.getProperties();
-			System.out.println(prop.get("Collidable"));
+				Rectangle rect = r.getRectangle();
+				Rectangle recto = new Rectangle(posx*16,
+						posy*16,
+						16,
+						16);
+				if (Intersector.overlaps(rect, recto))
+				{
+					hit = true;
+				}
+			
 		}
-		return true;
+		return hit;
 	}
 }
