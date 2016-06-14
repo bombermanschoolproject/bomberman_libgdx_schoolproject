@@ -134,6 +134,14 @@ public class Multiplayer implements Screen {
 		 if (allowed == false)
 			 testfigure.moveDown();
 	 }
+	 else if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+		 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), 2);
+		 Texture textbomb = new Texture("P1_Down.png");
+		 
+		 Sprite spritebomb = new Sprite(textbomb);
+		 tiledMapRenderer.addSprite(spritebomb);
+		 spritebomb.setPosition(testfigure.getX()*16, testfigure.getY()*16);
+	 }
 	 }
 	//
 	// @Override

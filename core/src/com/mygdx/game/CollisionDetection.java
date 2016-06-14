@@ -1,11 +1,5 @@
 package com.mygdx.game;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Intersector;
@@ -21,7 +15,7 @@ public class CollisionDetection {
 	public boolean detect(int posx, int posy) {
 		boolean hit = false;
 		
-		for (RectangleMapObject r : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
+		for (RectangleMapObject r : map.getLayers().get("Collidable").getObjects().getByType(RectangleMapObject.class)) {
 
 				Rectangle rect = r.getRectangle();
 				Rectangle recto = new Rectangle(posx*16,
@@ -32,8 +26,23 @@ public class CollisionDetection {
 				{
 					hit = true;
 				}
+				else {
+					for (RectangleMapObject b : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
+
+						Rectangle box = b.getRectangle();
+						Rectangle boxx = new Rectangle(posx*16,
+								posy*16,
+								16,
+								16);
+						if (Intersector.overlaps(box, boxx))
+						{
+							hit = true;
+						}
+					}
 			
+				}
 		}
+		
 		return hit;
 	}
 }
