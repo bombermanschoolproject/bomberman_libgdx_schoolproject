@@ -108,6 +108,8 @@ public class Multiplayer implements Screen {
 	 protected void getInputPlayer1() {
 	 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
 		 boolean allowed = false;
+		 sprite = new Sprite(new Texture("P1_Up.png"));
+		 tiledMapRenderer.addSprite(sprite);
 		 allowed = coll.detect(testfigure.getX(), testfigure.getY()+1);
 		 
 		 if (allowed == false)
@@ -115,6 +117,8 @@ public class Multiplayer implements Screen {
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
 		 boolean allowed = false;
+		 sprite = new Sprite(new Texture("P1_Left.png"));
+		 tiledMapRenderer.addSprite(sprite);
 		 allowed = coll.detect(testfigure.getX()-1, testfigure.getY());
 		 
 		 if (allowed == false)
@@ -122,6 +126,8 @@ public class Multiplayer implements Screen {
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
 		 boolean allowed = false;
+		 sprite = new Sprite(new Texture("P1_Right.png"));
+		 tiledMapRenderer.addSprite(sprite);
 		 allowed = coll.detect(testfigure.getX()+1, testfigure.getY());
 		 
 		 if (allowed == false)
@@ -129,13 +135,15 @@ public class Multiplayer implements Screen {
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
 		 boolean allowed = false;
+		 sprite = new Sprite(new Texture("P1_Down.png"));
+		 tiledMapRenderer.addSprite(sprite);
 		 allowed = coll.detect(testfigure.getX(), testfigure.getY()-1);
 		 
 		 if (allowed == false)
 			 testfigure.moveDown();
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-		 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), 2);
+		 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), testfigure.getBombRange());
 		 Texture textbomb = new Texture("P1_Down.png");
 		 
 		 Sprite spritebomb = new Sprite(textbomb);

@@ -14,6 +14,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite sprite;
     private List<Sprite> sprites;
     private int drawSpritesAfterLayer = 1;
+    private Sprite p1sprite;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
@@ -21,7 +22,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     }
 
     public void addSprite(Sprite sprite){
-        sprites.add(sprite);
+        p1sprite = sprite;
     }
 
     @Override
@@ -43,6 +44,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     }
                 }
             }
+            p1sprite.draw(this.getBatch());
         }
         endRender();
     }
