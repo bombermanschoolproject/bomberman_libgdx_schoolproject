@@ -106,42 +106,42 @@ public class Multiplayer implements Screen {
 //	}
 
 	 protected void getInputPlayer1() {
-	 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
-		 boolean allowed = false;
-		 allowed = coll.detect(testfigure.getX(), testfigure.getY()+1);
-		 
-		 if (allowed == false)
-			 testfigure.moveUp();
-	 }
-	 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-		 boolean allowed = false;
-		 allowed = coll.detect(testfigure.getX()-1, testfigure.getY());
-		 
-		 if (allowed == false)
-			 testfigure.moveLeft();
-	 }
-	 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-		 boolean allowed = false;
-		 allowed = coll.detect(testfigure.getX()+1, testfigure.getY());
-		 
-		 if (allowed == false)
-			 testfigure.moveRight();
-	 }
-	 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-		 boolean allowed = false;
-		 allowed = coll.detect(testfigure.getX(), testfigure.getY()-1);
-		 
-		 if (allowed == false)
-			 testfigure.moveDown();
-	 }
-	 else if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-		 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), 2);
-		 Texture textbomb = new Texture("P1_Down.png");
-		 
-		 Sprite spritebomb = new Sprite(textbomb);
-		 tiledMapRenderer.addSprite(spritebomb);
-		 spritebomb.setPosition(testfigure.getX()*16, testfigure.getY()*16);
-	 }
+		 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
+			 boolean allowed = false;
+			 allowed = coll.detect(testfigure.getX(), testfigure.getY()+1);
+			 
+			 if (allowed == false)
+				 testfigure.moveUp();
+		 }
+		 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+			 boolean allowed = false;
+			 allowed = coll.detect(testfigure.getX()-1, testfigure.getY());
+			 
+			 if (allowed == false)
+				 testfigure.moveLeft();
+		 }
+		 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+			 boolean allowed = false;
+			 allowed = coll.detect(testfigure.getX()+1, testfigure.getY());
+			 
+			 if (allowed == false)
+				 testfigure.moveRight();
+		 }
+		 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+			 boolean allowed = false;
+			 allowed = coll.detect(testfigure.getX(), testfigure.getY()-1);
+			 
+			 if (allowed == false)
+				 testfigure.moveDown();
+		 }
+		 else if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), 2);
+			 Texture textbomb = new Texture("P1_Down.png");
+			 
+			 Sprite spritebomb = new Sprite(textbomb);
+			 tiledMapRenderer.addSprite(spritebomb);
+			 spritebomb.setPosition(testfigure.getX()*16, testfigure.getY()*16);
+		 }
 	 }
 	//
 	// @Override

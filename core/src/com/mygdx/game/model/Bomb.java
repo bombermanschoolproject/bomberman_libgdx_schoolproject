@@ -1,45 +1,50 @@
 package com.mygdx.game.model;
 
-import java.util.TimerTask;
-
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
-import com.mygdx.game.control.Logic;
 
 public class Bomb {
 	
-	public static String textureName = "images/BombSprite.png";
+	private final int explosionTime = 3000;
+	private int strength;
+	private int x;
+	private int y;
 	
-	public static final int FRAME_COLS =2; 
-	public static final int FRAME_ROWS = 2;
-	public static String Name =  "Bomb";
-	public Arena arena;
-	protected Rectangle bounds = new Rectangle();
-
-	public int length;
-	TimerTask task;
-	Timer timer;
-	private float  animationState;
+	private long startTime;
 	
-	public Bomb(Arena arena, int length){ 
-		this.arena=arena;
-		this.length = length;
-		this.bounds.width = 1;
-		this.bounds.height = 1;
-		
-		animationState = 0; 
+	public Bomb(int xpos, int ypos, int strength) {
+		this.x=xpos;
+		this.y=ypos;
+		this.strength=strength;
+		this.startTime=System.currentTimeMillis();
 	}
 
-	public float getAnimationState(){
-		animationState+=0.5;
-		//animationState+=Gdx.graphics.getDeltaTime();  
-		return animationState;
-		
+	public int getStrength() {
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 	
-	public Rectangle getBounds() {
-		return bounds;
+	public int timeLeft(){
+		if(System.currentTimeMillis()-startTime >= explosionTime){
+			return 0;
+		}
+		return (int) (System.currentTimeMillis()-startTime);
 	}
-	
 }
