@@ -144,11 +144,14 @@ public class Multiplayer implements Screen {
 	 }
 	 else if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 		 Bomb testbomb = new Bomb(testfigure.getX(), testfigure.getY(), testfigure.getBombRange());
-		 Texture textbomb = new Texture("P1_Down.png");
+		 Texture textbomb = new Texture("bomb.png");
 		 
 		 Sprite spritebomb = new Sprite(textbomb);
-		 tiledMapRenderer.addSprite(spritebomb);
 		 spritebomb.setPosition(testfigure.getX()*16, testfigure.getY()*16);
+		 BombSpritePair bsp = new BombSpritePair(testbomb, spritebomb);
+		 
+		 tiledMapRenderer.addBombSpritePair(bsp);
+		 
 	 }
 	 }
 	//

@@ -15,14 +15,20 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private List<Sprite> sprites;
     private int drawSpritesAfterLayer = 1;
     private Sprite p1sprite;
+    private List<BombSpritePair> bombsprites;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
         sprites = new ArrayList<Sprite>();
+        bombsprites = new ArrayList<BombSpritePair>();
     }
 
     public void addSprite(Sprite sprite){
         p1sprite = sprite;
+    }
+    
+    public void addBombSpritePair(BombSpritePair bsp) {
+    	bombsprites.add(bsp);
     }
 
     @Override
@@ -44,8 +50,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     }
                 }
             }
-            p1sprite.draw(this.getBatch());
+            
         }
+        
+        for(BombSpritePair bsp : bombsprites) {
+        	bsp.getSprite().draw(this.getBatch());
+        }
+        p1sprite.draw(this.getBatch());	
         endRender();
     }
 }
