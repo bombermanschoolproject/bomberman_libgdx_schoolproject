@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -16,11 +17,16 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private int drawSpritesAfterLayer = 1;
     private Sprite p1sprite;
     private List<BombSpritePair> bombsprites;
+    private Sprite grassprite;
+    
+    private BombDetection bd;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
         sprites = new ArrayList<Sprite>();
         bombsprites = new ArrayList<BombSpritePair>();
+        bd = new BombDetection(this.getMap());
+        grassprite = new Sprite(new Texture("gras.png"));
     }
 
     public void addSprite(Sprite sprite){
@@ -40,10 +46,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer)layer);
                     currentLayer++;
-                    if(currentLayer == drawSpritesAfterLayer){
+                  //  if(currentLayer == drawSpritesAfterLayer){
                         for(Sprite sprite : sprites)
                             sprite.draw(this.getBatch());
-                    }
+                   // }
                 } else {
                     for (MapObject object : layer.getObjects()) {
                         renderObject(object);
@@ -54,7 +60,32 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
         
         for(BombSpritePair bsp : bombsprites) {
-        	bsp.getSprite().draw(this.getBatch());
+        	if(bsp.getBomb().timeLeft() != 0)
+        		bsp.getSprite().draw(this.getBatch());
+        	else {
+        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+1)) { 			
+        			Sprite sprite = new Sprite(new Texture("gras.png"));
+            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+1)*16);
+        			sprites.add(sprite);
+        		}
+        		else if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-1)){
+        			Sprite sprite = new Sprite(new Texture("gras.png"));
+            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-1)*16);
+            		sprites.add(sprite);
+	    		}
+	        	else if(bd.detect(bsp.getBomb().getX()+1, bsp.getBomb().getY())) {
+	        		Sprite sprite = new Sprite(new Texture("gras.png"));
+	        		sprite.setPosition((bsp.getBomb().getX()+1)*16, bsp.getBomb().getY()*16);
+	    			sprites.add(sprite);
+	    		}
+	        	else if(bd.detect(bsp.getBomb().getX()-1, bsp.getBomb().getY())){
+	        		Sprite sprite = new Sprite(new Texture("gras.png"));
+	        		sprite.setPosition((bsp.getBomb().getX()-1)*16, bsp.getBomb().getY()*16);
+	    			sprites.add(sprite);
+	    		}
+        		
+        		//bombsprites.remove(bsp);
+        	}
         }
         p1sprite.draw(this.getBatch());	
         endRender();

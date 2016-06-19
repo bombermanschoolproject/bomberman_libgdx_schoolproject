@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.model.Bomb;
 import com.mygdx.game.model.Figure;
 
 public class Multiplayer implements Screen {
@@ -147,49 +148,48 @@ public class Multiplayer implements Screen {
 //	}
 
 	 protected void getInputPlayer1() {
-		 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p1.getX(), p1.getY()+1);
-			 
-			 if (allowed == false)
-				 p1.moveUp();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p1.getX()-1, p1.getY());
-			 
-			 if (allowed == false)
-				 p1.moveLeft();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p1.getX()+1, p1.getY());
-			 
-			 if (allowed == false)
-				 p1.moveRight();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p1.getX(), p1.getY()-1);
-			 
-			 if (allowed == false)
-				 p1.moveDown();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.SHIFT_RIGHT)) {
-			 Bomb testbomb = new Bomb(p1.getX(), p1.getY(), 2);
-			 Texture textbomb = new Texture("P1_Down.png");
-			 
-			 Sprite spritebomb = new Sprite(textbomb);
-			 tiledMapRenderer.addSprite(spritebomb);
-			 spritebomb.setPosition(p1.getX()*16, p1.getY()*16);
-		 }
+//		 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
+//			 boolean allowed = false;
+//			 allowed = coll.detect(p1.getX(), p1.getY()+1);
+//			 
+//			 if (allowed == false)
+//				 p1.moveUp();
+//		 }
+//		 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+//			 boolean allowed = false;
+//			 allowed = coll.detect(p1.getX()-1, p1.getY());
+//			 
+//			 if (allowed == false)
+//				 p1.moveLeft();
+//		 }
+//		 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+//			 boolean allowed = false;
+//			 allowed = coll.detect(p1.getX()+1, p1.getY());
+//			 
+//			 if (allowed == false)
+//				 p1.moveRight();
+//		 }
+//		 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+//			 boolean allowed = false;
+//			 allowed = coll.detect(p1.getX(), p1.getY()-1);
+//			 
+//			 if (allowed == false)
+//				 p1.moveDown();
+//		 }
+//		 else if(Gdx.input.isKeyJustPressed(Keys.SHIFT_RIGHT)) {
+//			 Bomb testbomb = new Bomb(p1.getX(), p1.getY(), 2);
+//			 Texture textbomb = new Texture("P1_Down.png");
+//			 
+//			 Sprite spritebomb = new Sprite(textbomb);
+//			 tiledMapRenderer.addSprite(spritebomb);
+//			 spritebomb.setPosition(p1.getX()*16, p1.getY()*16);
+//		 }
 		 
 		 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
 			 boolean allowed = false;
 			 spriteP1 = new Sprite(new Texture("P1_Up.png"));
 			 tiledMapRenderer.addSprite(spriteP1);
 			 allowed = coll.detect(p1.getX(), p1.getY()+1);
-			 
 			 if (allowed == false)
 				 p1.moveUp();
 		 }
@@ -198,7 +198,6 @@ public class Multiplayer implements Screen {
 			 spriteP1 = new Sprite(new Texture("P1_Left.png"));
 			 tiledMapRenderer.addSprite(spriteP1);
 			 allowed = coll.detect(p1.getX()-1, p1.getY());
-			 
 			 if (allowed == false)
 				 p1.moveLeft();
 		 }
