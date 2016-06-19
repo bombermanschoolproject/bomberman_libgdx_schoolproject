@@ -10,5 +10,6 @@ public class DesktopLauncher {
 		config.width=800;
 		config.height=800;
 		new LwjglApplication(new Bomberman(), config);
+		
 	}
 }
