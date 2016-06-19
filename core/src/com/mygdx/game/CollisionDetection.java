@@ -34,12 +34,13 @@ public class CollisionDetection {
 								posy*16,
 								16,
 								16);
+						
 						if (Intersector.overlaps(box, boxx))
 						{
 							hit = true;
 						}
 					}
-			
+		
 				}
 		}
 		

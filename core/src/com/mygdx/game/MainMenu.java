@@ -10,27 +10,10 @@ public class MainMenu implements Screen{
 
 	Texture background;
 	Bomberman game;
-	
-	Texture exit1;
-	Texture exit2;
-	Rectangle exitarea;
-	
-//	Texture mp1;
-//	Texture mp2;
-	Rectangle mparea;
 
     public MainMenu(Bomberman game) {
     	this.game=game;
     	this.background = new Texture("StartScreen.png");
-    	
-//    	this.mp1=new Texture("");
-//    	this.mp2=new Texture("");
-//    	
-//    	this.exit1=new Texture("");
-//    	this.exit2=new Texture("");
-    	
-    	//this.mparea = new Rectangle(651,420,626,98);
-    	//this.exitarea = new Rectangle(651,540,626,98);
     }
     
 	@Override
@@ -47,26 +30,10 @@ public class MainMenu implements Screen{
 
         game.batch.begin();
         game.batch.draw(background, 0, 0);
-//        game.batch.draw(mp1, 610, 500);
-//        game.batch.draw(exit1, 610, 143);
 
         if(Gdx.input.justTouched()){
-        	game.setScreen(new Multiplayer(game));
+        	game.setScreen(new StartMenu(game));
         }
-
-//        if (mparea.contains(Gdx.input.getX(),Gdx.input.getY())){
-//        	game.batch.draw(mp2, 610, 500);
-//        	if(Gdx.input.justTouched()){
-//        		game.setScreen(new Multiplayer(game));
-//        	}
-//        }
-        
-//        if (exitarea.contains(Gdx.input.getX(),Gdx.input.getY())){
-//        	game.batch.draw(exit2, 610, 143);
-//        	if(Gdx.input.justTouched()){
-//        		System.exit(0);
-//        	}
-//        }
         
         game.batch.end();
     }
