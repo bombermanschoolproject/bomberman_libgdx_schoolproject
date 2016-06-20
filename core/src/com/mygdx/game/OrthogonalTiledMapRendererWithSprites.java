@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -31,6 +32,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite grassprite;
     private int count=0;
     
+    private List<List<RectangleMapObject>> deadzones;
+    private List<RectangleMapObject> deadzone;
     private BombDetection bd;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
@@ -92,29 +95,40 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         	if(bsp.getBomb().timeLeft() != 0)
         		bsp.getSprite().draw(this.getBatch());
         	else {
-        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+1)) { 			
-        			Sprite sprite = new Sprite(new Texture("gras.png"));
-            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+1)*16);
-        			sprites.add(sprite);
-        		}
-        		else if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-1)){
-        			Sprite sprite = new Sprite(new Texture("gras.png"));
-            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-1)*16);
-            		sprites.add(sprite);
-	    		}
-	        	else if(bd.detect(bsp.getBomb().getX()+1, bsp.getBomb().getY())) {
-	        		Sprite sprite = new Sprite(new Texture("gras.png"));
-	        		sprite.setPosition((bsp.getBomb().getX()+1)*16, bsp.getBomb().getY()*16);
-	    			sprites.add(sprite);
-	    		}
-	        	else if(bd.detect(bsp.getBomb().getX()-1, bsp.getBomb().getY())){
-	        		Sprite sprite = new Sprite(new Texture("gras.png"));
-	        		sprite.setPosition((bsp.getBomb().getX()-1)*16, bsp.getBomb().getY()*16);
-	    			sprites.add(sprite);
-	    		}
+        		
+        		detectBomb(bsp);
+        	}
+        		
+        		
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//	        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i)){
+//	        			Sprite sprite = new Sprite(new Texture("gras.png"));
+//	            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+//	            		sprites.add(sprite);
+//	            		end = true;
+//		    		}
+//        		}
+//        		
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//        			if(bd.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY())) {
+//        				Sprite sprite = new Sprite(new Texture("gras.png"));
+//        				sprite.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
+//        				sprites.add(sprite);
+//        				end = true;
+//        			}
+//	    		}
+//        		end = false;
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//        			if(bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY())){
+//        				Sprite sprite = new Sprite(new Texture("gras.png"));
+//        				sprite.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
+//        				sprites.add(sprite);
+//        				end = true;
+//        			}
+//        		}
         		
         		//bombsprites.remove(bsp);
-        	}
+        	
         }
         p1sprite.draw(this.getBatch());	
         p2sprite.draw(this.getBatch());
@@ -123,5 +137,17 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         endRender();
         
         
+    }
+    
+    public void detectBomb(BombSpritePair bsp) {
+    	for(int i = 0; i <= bsp.getBomb().getStrength(); i++) {
+    		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+i)) { 			
+    			Sprite sprite = new Sprite(new Texture("gras.png"));
+        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+i)*16);
+    			i = bsp.getBomb().getStrength()+1;
+    			sprites.add(sprite);
+    			
+    		}
+    	}
     }
 }
