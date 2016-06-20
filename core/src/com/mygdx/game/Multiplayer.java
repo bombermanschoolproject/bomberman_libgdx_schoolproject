@@ -65,65 +65,65 @@ public class Multiplayer implements Screen {
 
 	 private void create(int playerCount) {
 	
-	 batch = new SpriteBatch();
-	 camera = new OrthographicCamera();
-	
-	 tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
-	 tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
-	 coll = new CollisionDetection(tiledMap);
-	 
-	 tiledSet = tiledMap.getTileSets();
-	
-	 prop = tiledMap.getProperties();
-	
-	 mapWidth = prop.get("width", Integer.class);
-	 mapHeight = prop.get("height", Integer.class);
-	 tilePixelWidth = prop.get("tilewidth", Integer.class);
-	 tilePixelHeight = prop.get("tileheight", Integer.class);
-	
-	 mapPixelWidth = mapWidth * tilePixelWidth;
-	 mapPixelHeight = mapHeight * tilePixelHeight;
-	
-	 camera.setToOrtho(false,mapPixelWidth,mapPixelHeight);
-	 camera.update();
-	
-	 if(playerCount>=2){
-		 p1 = new Figure(1, 1, 3, 1, 2, false);
-		 p1PNG = new Texture("P1_Down.png");
-		 p2 = new Figure(1, 1, 3, 1, 2, false);
-		 p2PNG = new Texture("P2_Down.png");
+		 batch = new SpriteBatch();
+		 camera = new OrthographicCamera();
+		
+		 tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
+		 tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
+		 coll = new CollisionDetection(tiledMap);
 		 
-		 spriteP1 = new Sprite(p1PNG);
-		 tiledMapRenderer.addSprite(spriteP1);
-		 spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
-		 
-		 spriteP2 = new Sprite(p2PNG);
-		 tiledMapRenderer.addSprite(spriteP2);
-		 spriteP2.setPosition(p2.getX()*10, p2.getY()*10);
-
-		 getInputPlayer1();
-		 getInputPlayer2();
-	 }
-	 if(playerCount>=3){
-		 p3 = new Figure(1, 1, 3, 1, 2, false);
-		 p3PNG = new Texture("P3_Down.png");	
-		 
-		 spriteP3 = new Sprite(p3PNG);
-		 tiledMapRenderer.addSprite(spriteP3);
-		 spriteP3.setPosition(p3.getX()*1, p3.getY()*1);
-		 
-		 getInputPlayer3();
-	 }
-	 if(playerCount>=4){
-		 p4 = new Figure(1, 1, 3, 1, 2, false);
-		 p4PNG = new Texture("P4_Down.png");
-		 
-		 spriteP4 = new Sprite(p4PNG);
-		 tiledMapRenderer.addSprite(spriteP4);
-		 spriteP4.setPosition(p4.getX()*16, p4.getY()*32);
-		 
-		 getInputPlayer4();
-	 }
+		 tiledSet = tiledMap.getTileSets();
+		
+		 prop = tiledMap.getProperties();
+		
+		 mapWidth = prop.get("width", Integer.class);
+		 mapHeight = prop.get("height", Integer.class);
+		 tilePixelWidth = prop.get("tilewidth", Integer.class);
+		 tilePixelHeight = prop.get("tileheight", Integer.class);
+		
+		 mapPixelWidth = mapWidth * tilePixelWidth;
+		 mapPixelHeight = mapHeight * tilePixelHeight;
+		
+		 camera.setToOrtho(false,mapPixelWidth,mapPixelHeight);
+		 camera.update();
+		
+		 if(playerCount>=2){
+			 p1 = new Figure(1, 1, 3, 1, 2, false);
+			 p1PNG = new Texture("P1_Down.png");
+			 p2 = new Figure(1, 1, 3, 1, 2, false);
+			 p2PNG = new Texture("P2_Down.png");
+			 
+			 spriteP1 = new Sprite(p1PNG);
+			 tiledMapRenderer.addSprite(spriteP1);
+			 spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
+			 
+			 spriteP2 = new Sprite(p2PNG);
+			 tiledMapRenderer.addSprite(spriteP2);
+			 spriteP2.setPosition(p2.getX()*10, p2.getY()*10);
+	
+			 getInputPlayer1();
+			 getInputPlayer2();
+		 }
+		 if(playerCount>=3){
+			 p3 = new Figure(1, 1, 3, 1, 2, false);
+			 p3PNG = new Texture("P3_Down.png");	
+			 
+			 spriteP3 = new Sprite(p3PNG);
+			 tiledMapRenderer.addSprite(spriteP3);
+			 spriteP3.setPosition(p3.getX()*1, p3.getY()*1);
+			 
+			 getInputPlayer3();
+		 }
+		 if(playerCount>=4){
+			 p4 = new Figure(1, 1, 3, 1, 2, false);
+			 p4PNG = new Texture("P4_Down.png");
+			 
+			 spriteP4 = new Sprite(p4PNG);
+			 tiledMapRenderer.addSprite(spriteP4);
+			 spriteP4.setPosition(p4.getX()*16, p4.getY()*32);
+			 
+			 getInputPlayer4();
+		 }
 
 	 }
 
