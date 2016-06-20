@@ -186,8 +186,7 @@ public class Multiplayer implements Screen {
 			 Texture textbomb = new Texture("bomb.png");
 			 
 			 Sprite spritebomb = new Sprite(textbomb);
-			 spritebomb.setPosition(p1.getX()*16, p1.getY()*16);
-			 BombSpritePair bsp = new BombSpritePair(testbomb, spritebomb);
+			 BombSpritePair bsp = new BombSpritePair(p1, testbomb, spritebomb);
 			 
 			 tiledMapRenderer.addBombSpritePair(bsp);
 			 
@@ -236,8 +235,7 @@ public class Multiplayer implements Screen {
 			 Texture textbomb = new Texture("bomb.png");
 			 
 			 Sprite spritebomb = new Sprite(textbomb);
-			 spritebomb.setPosition(p2.getX()*16, p2.getY()*16);
-			 BombSpritePair bsp = new BombSpritePair(testbomb, spritebomb);
+			 BombSpritePair bsp = new BombSpritePair(p2, testbomb, spritebomb);
 			 
 			 tiledMapRenderer.addBombSpritePair(bsp);
 			 
@@ -286,8 +284,7 @@ public class Multiplayer implements Screen {
 			 Texture textbomb = new Texture("bomb.png");
 			 
 			 Sprite spritebomb = new Sprite(textbomb);
-			 spritebomb.setPosition(p3.getX()*16, p3.getY()*16);
-			 BombSpritePair bsp = new BombSpritePair(testbomb, spritebomb);
+			 BombSpritePair bsp = new BombSpritePair(p3, testbomb, spritebomb);
 			 
 			 tiledMapRenderer.addBombSpritePair(bsp);
 			 
@@ -336,8 +333,7 @@ public class Multiplayer implements Screen {
 			 Texture textbomb = new Texture("bomb.png");
 			 
 			 Sprite spritebomb = new Sprite(textbomb);
-			 spritebomb.setPosition(p4.getX()*16, p4.getY()*16);
-			 BombSpritePair bsp = new BombSpritePair(testbomb, spritebomb);
+			 BombSpritePair bsp = new BombSpritePair(p4, testbomb, spritebomb);
 			 
 			 tiledMapRenderer.addBombSpritePair(bsp);
 			 

@@ -19,6 +19,14 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite p2sprite;
     private Sprite p3sprite;
     private Sprite p4sprite;
+    
+    private Sprite bomb1;
+    private Sprite bomb2;
+    private Sprite bomb3;
+    private Sprite bomb4;
+    private Sprite bomb5;
+    private Sprite bomb6;
+    
     private List<BombSpritePair> bombsprites;
     private Sprite grassprite;
     private int count=0;
@@ -31,6 +39,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         bombsprites = new ArrayList<BombSpritePair>();
         bd = new BombDetection(this.getMap());
         grassprite = new Sprite(new Texture("gras.png"));
+        bomb1 = new Sprite(new Texture("bomb.png"));
+        bomb2 = new Sprite(new Texture("bomb2.png"));
+        bomb3 = new Sprite(new Texture("bomb3.png"));
+        bomb4 = new Sprite(new Texture("bomb4.png"));
+        bomb5 = new Sprite(new Texture("bomb5.png"));
+        bomb6 = new Sprite(new Texture("bomb6.png"));
     }
 
     public void addSprite1(Sprite sprite){
@@ -104,8 +118,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
         p1sprite.draw(this.getBatch());	
         p2sprite.draw(this.getBatch());
-        if(count==3)p3sprite.draw(this.getBatch());
-        if(count==4)p4sprite.draw(this.getBatch());
+        if(count>=3)p3sprite.draw(this.getBatch());
+        if(count>=4)p4sprite.draw(this.getBatch());
         endRender();
         
         
