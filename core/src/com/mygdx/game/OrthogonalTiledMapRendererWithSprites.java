@@ -21,6 +21,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite p4sprite;
     private List<BombSpritePair> bombsprites;
     private Sprite grassprite;
+    private int count=0;
     
     private BombDetection bd;
 
@@ -40,9 +41,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     }
     public void addSprite3(Sprite sprite){
     	p3sprite = sprite;
+    	this.count = 3;
     }
     public void addSprite4(Sprite sprite){
     	p4sprite = sprite;
+    	this.count=4;
     }
     
     public void addBombSpritePair(BombSpritePair bsp) {
@@ -101,8 +104,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
         p1sprite.draw(this.getBatch());	
         p2sprite.draw(this.getBatch());
-        p3sprite.draw(this.getBatch());
-        p4sprite.draw(this.getBatch());
+        if(count==3)p3sprite.draw(this.getBatch());
+        if(count==4)p4sprite.draw(this.getBatch());
         endRender();
     }
 }
