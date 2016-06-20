@@ -197,7 +197,7 @@ public class Multiplayer implements Screen {
 	 protected void getInputPlayer2() {
 		 if(Gdx.input.isKeyJustPressed(Keys.W)) {
 			 boolean allowed = false;
-			 spriteP2 = new Sprite(new Texture("P1_Up.png"));
+			 spriteP2 = new Sprite(new Texture("P2_Up.png"));
 			 tiledMapRenderer.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX(), p2.getY()+1);
 			 
@@ -206,7 +206,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.A)) {
 			 boolean allowed = false;
-			 spriteP2 = new Sprite(new Texture("P1_Left.png"));
+			 spriteP2 = new Sprite(new Texture("P2_Left.png"));
 			 tiledMapRenderer.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX()-1, p2.getY());
 			 
@@ -215,7 +215,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.D)) {
 			 boolean allowed = false;
-			 spriteP2 = new Sprite(new Texture("P1_Right.png"));
+			 spriteP2 = new Sprite(new Texture("P2_Right.png"));
 			 tiledMapRenderer.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX()+1, p2.getY());
 			 
@@ -224,7 +224,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.S)) {
 			 boolean allowed = false;
-			 spriteP2 = new Sprite(new Texture("P1_Down.png"));
+			 spriteP2 = new Sprite(new Texture("P2_Down.png"));
 			 tiledMapRenderer.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX(), p2.getY()-1);
 			 
@@ -247,44 +247,7 @@ public class Multiplayer implements Screen {
 	 protected void getInputPlayer3() {
 		 if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
 			 boolean allowed = false;
-			 allowed = coll.detect(p3.getX(), p3.getY()+1);
-			 
-			 if (allowed == false)
-				 p3.moveUp();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p3.getX()-1, p3.getY());
-			 
-			 if (allowed == false)
-				 p3.moveLeft();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p3.getX()+1, p3.getY());
-			 
-			 if (allowed == false)
-				 p3.moveRight();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p3.getX(), p3.getY()-1);
-			 
-			 if (allowed == false)
-				 p3.moveDown();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_7)) {
-			 Bomb testbomb = new Bomb(p3.getX(), p3.getY(), 2);
-			 Texture textbomb = new Texture("P1_Down.png");
-			 
-			 Sprite spritebomb = new Sprite(textbomb);
-			 tiledMapRenderer.addSprite3(spritebomb);
-			 spritebomb.setPosition(p3.getX()*16, p3.getY()*16);
-		 }
-		 
-		 if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
-			 boolean allowed = false;
-			 spriteP3 = new Sprite(new Texture("P1_Up.png"));
+			 spriteP3 = new Sprite(new Texture("P3_Up.png"));
 			 tiledMapRenderer.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX(), p3.getY()+1);
 			 
@@ -293,7 +256,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
 			 boolean allowed = false;
-			 spriteP3 = new Sprite(new Texture("P1_Left.png"));
+			 spriteP3 = new Sprite(new Texture("P3_Left.png"));
 			 tiledMapRenderer.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX()-1, p3.getY());
 			 
@@ -302,7 +265,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
 			 boolean allowed = false;
-			 spriteP3 = new Sprite(new Texture("P1_Right.png"));
+			 spriteP3 = new Sprite(new Texture("P3_Right.png"));
 			 tiledMapRenderer.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX()+1, p3.getY());
 			 
@@ -311,7 +274,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
 			 boolean allowed = false;
-			 spriteP3 = new Sprite(new Texture("P1_Down.png"));
+			 spriteP3 = new Sprite(new Texture("P3_Down.png"));
 			 tiledMapRenderer.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX(), p3.getY()-1);
 			 
@@ -334,44 +297,7 @@ public class Multiplayer implements Screen {
 	 protected void getInputPlayer4() {
 		 if(Gdx.input.isKeyJustPressed(Keys.I)) {
 			 boolean allowed = false;
-			 allowed = coll.detect(p4.getX(), p4.getY()+1);
-			 
-			 if (allowed == false)
-				 p4.moveUp();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.J)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p4.getX()-1, p4.getY());
-			 
-			 if (allowed == false)
-				 p4.moveLeft();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.L)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p4.getX()+1, p4.getY());
-			 
-			 if (allowed == false)
-				 p4.moveRight();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.K)) {
-			 boolean allowed = false;
-			 allowed = coll.detect(p4.getX(), p4.getY()-1);
-			 
-			 if (allowed == false)
-				 p4.moveDown();
-		 }
-		 else if(Gdx.input.isKeyJustPressed(Keys.H)) {
-			 Bomb testbomb = new Bomb(p4.getX(), p4.getY(), 2);
-			 Texture textbomb = new Texture("P1_Down.png");
-			 
-			 Sprite spritebomb = new Sprite(textbomb);
-			 tiledMapRenderer.addSprite4(spritebomb);
-			 spritebomb.setPosition(p4.getX()*16, p4.getY()*16);
-		 }
-		 
-		 if(Gdx.input.isKeyJustPressed(Keys.I)) {
-			 boolean allowed = false;
-			 spriteP4 = new Sprite(new Texture("P1_Up.png"));
+			 spriteP4 = new Sprite(new Texture("P4_Up.png"));
 			 tiledMapRenderer.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX(), p4.getY()+1);
 			 
@@ -380,7 +306,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.J)) {
 			 boolean allowed = false;
-			 spriteP4 = new Sprite(new Texture("P1_Left.png"));
+			 spriteP4 = new Sprite(new Texture("P4_Left.png"));
 			 tiledMapRenderer.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX()-1, p4.getY());
 			 
@@ -389,7 +315,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.L)) {
 			 boolean allowed = false;
-			 spriteP4 = new Sprite(new Texture("P1_Right.png"));
+			 spriteP4 = new Sprite(new Texture("P4_Right.png"));
 			 tiledMapRenderer.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX()+1, p4.getY());
 			 
@@ -398,7 +324,7 @@ public class Multiplayer implements Screen {
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.K)) {
 			 boolean allowed = false;
-			 spriteP4 = new Sprite(new Texture("P1_Down.png"));
+			 spriteP4 = new Sprite(new Texture("P4_Down.png"));
 			 tiledMapRenderer.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX(), p4.getY()-1);
 			 
@@ -491,7 +417,7 @@ public class Multiplayer implements Screen {
 		spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
 		spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
 		if(spriteP3!=null)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
-		if(spriteP3!=null)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
+		if(spriteP4!=null)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
 	}
 
 }
