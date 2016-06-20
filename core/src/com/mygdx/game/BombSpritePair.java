@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.model.Bomb;
 
 public class BombSpritePair {
 	
