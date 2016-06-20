@@ -368,4 +368,6 @@
   <object id="302" x="266.102" y="349.841" width="15" height="15"/>
   <object id="304" x="265.966" y="317.841" width="15" height="15"/>
  </objectgroup>
+ <objectgroup name="DeadZones"/>
+ <objectgroup name="Bombs"/>
 </map>
