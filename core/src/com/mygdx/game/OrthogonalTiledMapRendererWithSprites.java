@@ -107,5 +107,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         if(count==3)p3sprite.draw(this.getBatch());
         if(count==4)p4sprite.draw(this.getBatch());
         endRender();
+        
+        
     }
 }
