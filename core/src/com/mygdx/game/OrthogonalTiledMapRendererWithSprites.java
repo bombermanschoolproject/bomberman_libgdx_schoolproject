@@ -32,8 +32,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite grassprite;
     private int count=0;
     
-    private List<List<RectangleMapObject>> deadzones;
-    private List<RectangleMapObject> deadzone;
+    
     private BombDetection bd;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
