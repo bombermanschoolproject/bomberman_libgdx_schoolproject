@@ -78,26 +78,47 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         	if(bsp.getBomb().timeLeft() != 0)
         		bsp.getSprite().draw(this.getBatch());
         	else {
-        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+1)) { 			
-        			Sprite sprite = new Sprite(new Texture("gras.png"));
-            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+1)*16);
-        			sprites.add(sprite);
-        		}
-        		else if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-1)){
-        			Sprite sprite = new Sprite(new Texture("gras.png"));
-            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-1)*16);
-            		sprites.add(sprite);
-	    		}
-	        	else if(bd.detect(bsp.getBomb().getX()+1, bsp.getBomb().getY())) {
-	        		Sprite sprite = new Sprite(new Texture("gras.png"));
-	        		sprite.setPosition((bsp.getBomb().getX()+1)*16, bsp.getBomb().getY()*16);
-	    			sprites.add(sprite);
-	    		}
-	        	else if(bd.detect(bsp.getBomb().getX()-1, bsp.getBomb().getY())){
-	        		Sprite sprite = new Sprite(new Texture("gras.png"));
-	        		sprite.setPosition((bsp.getBomb().getX()-1)*16, bsp.getBomb().getY()*16);
-	    			sprites.add(sprite);
-	    		}
+        		int i = 0;
+        		boolean end = false;
+        		for(i = 1; i <= bsp.getBomb().getStrength() && end == false; i++) {
+        			end = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
+	        		if(end == true) { 			
+	        			Sprite sprite = new Sprite(new Texture("gras.png"));
+	            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+i)*16);
+	        			i = bsp.getBomb().getStrength()+1;
+	        			sprites.add(sprite);
+	        			
+	        			
+	        	}
+        	}
+        		
+        		
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//	        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i)){
+//	        			Sprite sprite = new Sprite(new Texture("gras.png"));
+//	            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+//	            		sprites.add(sprite);
+//	            		end = true;
+//		    		}
+//        		}
+//        		
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//        			if(bd.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY())) {
+//        				Sprite sprite = new Sprite(new Texture("gras.png"));
+//        				sprite.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
+//        				sprites.add(sprite);
+//        				end = true;
+//        			}
+//	    		}
+//        		end = false;
+//        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
+//        			if(bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY())){
+//        				Sprite sprite = new Sprite(new Texture("gras.png"));
+//        				sprite.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
+//        				sprites.add(sprite);
+//        				end = true;
+//        			}
+//        		}
         		
         		//bombsprites.remove(bsp);
         	}
