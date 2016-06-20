@@ -89,5 +89,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
         p1sprite.draw(this.getBatch());	
         endRender();
+        
+        
     }
 }
