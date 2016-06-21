@@ -12,12 +12,16 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.mygdx.game.control.BombSpritePair;
 import com.mygdx.game.model.Bomb;
 import com.mygdx.game.model.Figure;
+import com.mygdx.game.view.PauseScreen;
 
 public class Multiplayer implements Screen {
 
 	 private SpriteBatch batch;
+	 
+	 private Bomberman game;
 	 
 	 Sprite spriteP1;
 	 Sprite spriteP2;
@@ -65,6 +69,7 @@ public class Multiplayer implements Screen {
 //	spriteP1 spriteP1;
 
 	public Multiplayer(Bomberman game, int playerCount) {
+		this.game=game;
 		this.create(playerCount);
 	}
 
@@ -72,7 +77,7 @@ public class Multiplayer implements Screen {
 	
 		 batch = new SpriteBatch();
 		 camera = new OrthographicCamera();
-		
+		 
 		 tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
 		 tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
 		 coll = new CollisionDetection(tiledMap);
@@ -433,6 +438,11 @@ public class Multiplayer implements Screen {
 		spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
 		if(spriteP3!=null && p3alive)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
 		if(spriteP4!=null && p4alive)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
+	
+	
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			game.setScreen(new PauseScreen(game,this));
+		}
+		
 	}
-
 }
