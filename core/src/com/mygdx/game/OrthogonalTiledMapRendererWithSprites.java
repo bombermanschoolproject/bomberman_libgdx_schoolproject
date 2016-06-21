@@ -100,6 +100,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         		bsp.getSprite().draw(this.getBatch());
         	else {
         		if(detectAllowed)
+        			//addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY());
         			detectBomb(bsp);
         	}
         		
@@ -149,26 +150,34 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     
     public void detectBomb(BombSpritePair bsp) {
     	detectAllowed = false;
-    	int counter=0;
-    	for(int i = 0; i <= bsp.getBomb().getStrength() && counter!=1; i++) {
-    		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i)) { 			
-    			Sprite sprite = new Sprite(new Texture("gras.png"));
-        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
-        		sprites.add(sprite);
+    	
+    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
+    		
+    		RectangleMapObject r = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
+    		if (r != null) {
+    			if(!detectAllowed)
+    				map.getLayers().get("Boxes").getObjects().remove(r);
+//    			Sprite sprite = new Sprite(new Texture("gras.png"));
+//        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+//        		sprites.add(sprite);
         		
         		//DeadZone
-        		DeadZone dz = new DeadZone(bsp.getBomb().getX(), (bsp.getBomb().getY()-i));
-    			Sprite dSprite = new Sprite(new Texture("P4_Down.png"));
-    			dSprite.setPosition(dz.getX()*16, dz.getY()*16);
-    			dz.setSprite(dSprite);
-    			dz.setRmo(new RectangleMapObject(dz.getX()*16, dz.getY()*16, 16, 16));
-    			map.getLayers().get("DeadZones").getObjects().add(dz.getRmo());
-    			deadzones.add(dz);
+        		
     			
-    			counter=1;
-    			
+    			detectAllowed = true;
     		}
+    		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
     	}
-    	detectAllowed = true;
+    	
+    }
+    
+    public void addDeadZone(int x, int y) {
+    	DeadZone dz = new DeadZone(x, y);
+		Sprite dSprite = new Sprite(new Texture("P4_Down.png"));
+		dSprite.setPosition(dz.getX()*16, dz.getY()*16);
+		dz.setSprite(dSprite);
+		dz.setRmo(new RectangleMapObject(dz.getX()*16, dz.getY()*16, 16, 16));
+		map.getLayers().get("DeadZones").getObjects().add(dz.getRmo());
+		deadzones.add(dz);
     }
 }

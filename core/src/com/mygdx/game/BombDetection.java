@@ -12,7 +12,7 @@ public class BombDetection {
         this.map = map;
     }
 	
-	public boolean detect(int posx, int posy) {	
+	public RectangleMapObject detect(int posx, int posy) {	
 		boolean hit = false;
 		for (RectangleMapObject r : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
 
@@ -23,10 +23,10 @@ public class BombDetection {
 						16);
 				if (Intersector.overlaps(rect, recto))
 				{
-					map.getLayers().get("Boxes").getObjects().remove(r);
-					hit = true;
+					
+					return r;
 				}
 		}
-		return hit;
+		return null;
 	}
 }
