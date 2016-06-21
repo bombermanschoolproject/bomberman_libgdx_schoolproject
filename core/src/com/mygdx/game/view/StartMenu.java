@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Bomberman;
 import com.mygdx.game.Multiplayer;
@@ -29,6 +31,8 @@ public class StartMenu implements Screen{
 	Texture p4_2;
 	Rectangle p4area;
 	
+	TiledMap map;
+	
     public StartMenu(Bomberman game) {
     	this.game=game;
     	this.background = new Texture("StartMenu2.png");
@@ -49,6 +53,7 @@ public class StartMenu implements Screen{
     	this.exit2 = new Texture("Exit_Button_2.png");
     	this.exitarea = new Rectangle(297,637,214,55);
     	
+    	this.map=new TmxMapLoader().load("BombermanMap.tmx");
     }
     
 	@Override
@@ -73,19 +78,19 @@ public class StartMenu implements Screen{
         if(p2area.contains(Gdx.input.getX(),Gdx.input.getY())){
         	game.batch.draw(p2_2, 50, 400);
         	if(Gdx.input.justTouched()){
-        		game.setScreen(new Multiplayer(game,2));
+        		game.setScreen(new Multiplayer(map,game,2));
         	}
         }
         if(p3area.contains(Gdx.input.getX(),Gdx.input.getY())){
         	game.batch.draw(p3_2, 50, 281);
         	if(Gdx.input.justTouched()){
-        		game.setScreen(new Multiplayer(game,3));
+        		game.setScreen(new Multiplayer(map,game,3));
         	}
         }
         if(p4area.contains(Gdx.input.getX(),Gdx.input.getY())){
         	game.batch.draw(p4_2, 50, 162);
         	if(Gdx.input.justTouched()){
-        		game.setScreen(new Multiplayer(game,4));
+        		game.setScreen(new Multiplayer(map,game,4));
         	}
         }
         if(exitarea.contains(Gdx.input.getX(),Gdx.input.getY())){

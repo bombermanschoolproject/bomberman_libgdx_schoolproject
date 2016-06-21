@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
@@ -8,11 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.control.BombSpritePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRenderer {
     private Sprite sprite;
@@ -29,6 +28,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite bomb4;
     private Sprite bomb5;
     private Sprite bomb6;
+    
+    private Sprite explosionUpDown;
     
     private List<BombSpritePair> bombsprites;
     private List<DeadZone> deadzones;
@@ -51,6 +52,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         bomb4 = new Sprite(new Texture("bomb4.png"));
         bomb5 = new Sprite(new Texture("bomb5.png"));
         bomb6 = new Sprite(new Texture("bomb6.png"));
+        explosionUpDown = new Sprite(new Texture("Explosion_UpDown.png"));
     }
 
     public void addSprite1(Sprite sprite){
@@ -97,6 +99,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         
         
         for(BombSpritePair bsp : bombsprites) {
+        	detectAllowed=true;
         	if(bsp.getBomb().timeLeft() != 0)
         		bsp.getSprite().draw(this.getBatch());
         	else {
@@ -143,10 +146,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         	if(checkDeadZone(dz) == false)
         		dz.getSprite().draw(this.getBatch());
         }
-        p1sprite.draw(this.getBatch());	
-        p2sprite.draw(this.getBatch());
-        if(count==3)p3sprite.draw(this.getBatch());
-        if(count==4)p4sprite.draw(this.getBatch());
+        if(p1sprite!=null)p1sprite.draw(this.getBatch());	
+        if(p2sprite!=null)p2sprite.draw(this.getBatch());
+        if(p3sprite!=null)p3sprite.draw(this.getBatch());
+        if(p4sprite!=null)p4sprite.draw(this.getBatch());
         endRender();
         
         
@@ -159,11 +162,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     		
     		RectangleMapObject r = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
     		if (r != null) {
-    			if(!detectAllowed)
+    			if(!detectAllowed){
     				map.getLayers().get("Boxes").getObjects().remove(r);
-    			Sprite sprite = new Sprite(new Texture("gras.png"));
-        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
-        		sprites.add(sprite);
+    			}
+        		grassprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+        		sprites.add(grassprite);
         		
         		//DeadZone
         		
@@ -172,14 +175,64 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     		}
     		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
     	}
-    	
+    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
+    		
+    		RectangleMapObject r = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
+    		if (r != null) {
+    			if(!detectAllowed){
+    				map.getLayers().get("Boxes").getObjects().remove(r);
+    			}
+        		grassprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+i)*16);
+        		sprites.add(grassprite);
+        		
+        		//DeadZone
+        		
+    			
+    			detectAllowed = true;
+    		}
+    		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
+    	}
+    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
+    		
+    		RectangleMapObject r = bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY());
+    		if (r != null) {
+    			if(!detectAllowed){
+    				map.getLayers().get("Boxes").getObjects().remove(r);
+    			}
+        		grassprite.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
+        		sprites.add(grassprite);
+        		
+        		//DeadZone
+        		
+    			
+    			detectAllowed = true;
+    		}
+    		addDeadZone(bsp.getBomb().getX()-i, bsp.getBomb().getY());
+    	}
+    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
+    		
+    		RectangleMapObject r = bd.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY());
+    		if (r != null) {
+    			if(!detectAllowed){
+    				map.getLayers().get("Boxes").getObjects().remove(r);
+    			}
+        		grassprite.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
+        		sprites.add(grassprite);
+        		
+        		//DeadZone
+        		
+    			
+    			detectAllowed = true;
+    		}
+    		addDeadZone(bsp.getBomb().getX()+i, bsp.getBomb().getY());
+    	}
     }
     
     public void addDeadZone(int x, int y) {
     	DeadZone dz = new DeadZone(x, y);
-		Sprite dSprite = new Sprite(new Texture("P4_Down.png"));
-		dSprite.setPosition(dz.getX()*16, dz.getY()*16);
-		dz.setSprite(dSprite);
+    	
+		explosionUpDown.setPosition(dz.getX()*16, dz.getY()*16);
+		dz.setSprite(explosionUpDown);
 		dz.setRmo(new RectangleMapObject(dz.getX()*16, dz.getY()*16, 16, 16));
 		map.getLayers().get("DeadZones").getObjects().add(dz.getRmo());
 		deadzones.add(dz);
@@ -192,6 +245,5 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     	}
     	else
     		return false;
-    		
     }
 }

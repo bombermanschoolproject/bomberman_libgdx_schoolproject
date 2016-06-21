@@ -2,10 +2,11 @@ package com.mygdx.game.control;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.model.Bomb;
 import com.mygdx.game.model.Figure;
 
-public class BombSpritePair {
+public class BombSpritePair implements Disposable{
 	
 	private Bomb bomb;
 	
@@ -24,14 +25,14 @@ public class BombSpritePair {
 	
 	private long startTime=System.currentTimeMillis();
 	
-	public BombSpritePair(Figure figure, Bomb bomb, Sprite sprite) {
+	public BombSpritePair(Figure figure, Bomb bomb) {
 		this.figure=figure;
 		this.bomb = bomb;
-		this.sprite = sprite;
 		
 		this.x=figure.getX();
 		this.y=figure.getY();
 		
+		this.sprite=new Sprite(new Texture("bomb.png"));
 		this.sprite2=new Sprite(new Texture("bomb2.png"));
 		this.sprite3=new Sprite(new Texture("bomb3.png"));
 		this.sprite4=new Sprite(new Texture("bomb4.png"));
@@ -78,6 +79,12 @@ public class BombSpritePair {
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
+	}
+
+	@Override
+	public void dispose() {
+		if(System.currentTimeMillis()-startTime>5000)
+			this.dispose();
 	}
 
 }
