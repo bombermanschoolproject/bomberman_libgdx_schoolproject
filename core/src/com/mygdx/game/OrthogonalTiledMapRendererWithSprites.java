@@ -100,9 +100,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         	if(bsp.getBomb().timeLeft() != 0)
         		bsp.getSprite().draw(this.getBatch());
         	else {
-        		if(detectAllowed)
+        		if(detectAllowed) {
         			//addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY());
         			detectBomb(bsp);
+        			detectAllowed = false;
+        		}
         	}
         		
         		
@@ -138,12 +140,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
         
         for (DeadZone dz : deadzones) {
-            dz.getSprite().draw(this.getBatch());
+        	if(checkDeadZone(dz) == false)
+        		dz.getSprite().draw(this.getBatch());
         }
         p1sprite.draw(this.getBatch());	
         p2sprite.draw(this.getBatch());
-        if(count>=3)p3sprite.draw(this.getBatch());
-        if(count>=4)p4sprite.draw(this.getBatch());
+        if(count==3)p3sprite.draw(this.getBatch());
+        if(count==4)p4sprite.draw(this.getBatch());
         endRender();
         
         
@@ -158,9 +161,9 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     		if (r != null) {
     			if(!detectAllowed)
     				map.getLayers().get("Boxes").getObjects().remove(r);
-//    			Sprite sprite = new Sprite(new Texture("gras.png"));
-//        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
-//        		sprites.add(sprite);
+    			Sprite sprite = new Sprite(new Texture("gras.png"));
+        		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+        		sprites.add(sprite);
         		
         		//DeadZone
         		
@@ -180,5 +183,15 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 		dz.setRmo(new RectangleMapObject(dz.getX()*16, dz.getY()*16, 16, 16));
 		map.getLayers().get("DeadZones").getObjects().add(dz.getRmo());
 		deadzones.add(dz);
+    }
+    
+    public boolean checkDeadZone(DeadZone dz) {
+    	if(dz.timeLeft() == 0) {
+    		map.getLayers().get("DeadZones").getObjects().remove(dz.getRmo());
+    		return true;
+    	}
+    	else
+    		return false;
+    		
     }
 }

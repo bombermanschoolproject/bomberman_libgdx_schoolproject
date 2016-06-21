@@ -419,8 +419,10 @@ public class Multiplayer implements Screen {
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-		getInputPlayer1();
-		p1alive = dd.detect(p1.getX(), p1.getY());
+		if(p1alive) {
+			getInputPlayer1();
+			p1alive = dd.detect(p1.getX(), p1.getY());
+		}
 		getInputPlayer2();
 		p2alive = dd.detect(p2.getX(), p2.getY());
 		if(spriteP3!=null) {
@@ -434,7 +436,8 @@ public class Multiplayer implements Screen {
 		
 		if(p1alive)
 			spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
-		
+		else
+			tiledMapRenderer.addSprite1(null);
 		spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
 		if(spriteP3!=null && p3alive)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
 		if(spriteP4!=null && p4alive)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
