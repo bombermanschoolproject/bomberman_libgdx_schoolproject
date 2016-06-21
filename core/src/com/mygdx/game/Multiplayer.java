@@ -41,6 +41,7 @@ public class Multiplayer implements Screen {
 	 Texture p4PNG;
 	 
 	 CollisionDetection coll;
+	 DeadDetection dd;
 	
 	 int mapWidth;
 	 int mapHeight;
@@ -49,6 +50,12 @@ public class Multiplayer implements Screen {
 	
 	 int mapPixelWidth;
 	 int mapPixelHeight;
+	 
+	 boolean p1alive = true;
+	 boolean p2alive = true;
+	 boolean p3alive = true;
+	 boolean p4alive = true;
+	 
 
 //	Texture img;
 //	TiledMap tiledMap;
@@ -69,6 +76,7 @@ public class Multiplayer implements Screen {
 		 tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
 		 tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
 		 coll = new CollisionDetection(tiledMap);
+		 dd = new DeadDetection(tiledMap);
 		 
 		 tiledSet = tiledMap.getTileSets();
 		
@@ -150,8 +158,9 @@ public class Multiplayer implements Screen {
 			 spriteP1 = new Sprite(new Texture("P1_Up.png"));
 			 tiledMapRenderer.addSprite1(spriteP1);
 			 allowed = coll.detect(p1.getX(), p1.getY()+1);
+
 			 
-			 if (allowed == false)
+			 if (allowed == false && p1alive)
 				 p1.moveUp();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
@@ -406,14 +415,24 @@ public class Multiplayer implements Screen {
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 		getInputPlayer1();
+		p1alive = dd.detect(p1.getX(), p1.getY());
 		getInputPlayer2();
-		getInputPlayer3();
-		getInputPlayer4();
+		p2alive = dd.detect(p2.getX(), p2.getY());
+		if(spriteP3!=null) {
+			getInputPlayer3();
+			p3alive = dd.detect(p3.getX(), p3.getY());
+		}
+		if(spriteP4!=null) {
+			getInputPlayer4();
+			p4alive = dd.detect(p4.getX(), p4.getY());
+		}
 		
-		spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
+		if(p1alive)
+			spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
+		
 		spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
-		if(spriteP3!=null)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
-		if(spriteP4!=null)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
+		if(spriteP3!=null && p3alive)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
+		if(spriteP4!=null && p4alive)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
 	}
 
 }
