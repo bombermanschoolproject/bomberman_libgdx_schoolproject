@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Bomberman;
-import com.mygdx.game.Multiplayer;
 
 public class GameOverScreen implements Screen{
 
@@ -41,8 +40,8 @@ public class GameOverScreen implements Screen{
     	this.back1=new Texture("Back_Button.png");
     	this.back2=new Texture("Back_Button_2.png");
     	
-    	this.continuearea = new Rectangle(297,280,214,55);
-    	this.backarea = new Rectangle(297,399,214,55);
+   
+    	this.backarea = new Rectangle(297,510,214,55);
 	}
 
 	@Override
@@ -57,15 +56,15 @@ public class GameOverScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
 
-        game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        batch.begin();
+        batch.draw(background, 0, 0);
         
         
         if(won==1){
-        	scoreFont.draw(batch, "Player 1 won!", 100, 399);
+        	scoreFont.draw(batch, "Player 1 won!", 275, 399);
         }
         else if(won==2){
-        	scoreFont.draw(batch, "Player 2 won!", 100, 399);
+        	scoreFont.draw(batch, "Player 2 won!", 275, 399);
         }
         else if(won==3){
         	scoreFont.draw(batch, "Player 3 won!", 100, 399);
@@ -74,17 +73,17 @@ public class GameOverScreen implements Screen{
         	scoreFont.draw(batch, "Player 4 won!", 100, 399);
         }
         
-        game.batch.draw(back1, 50, 281);
+        batch.draw(back1, 50, 181);
 
         
         if(backarea.contains(Gdx.input.getX(),Gdx.input.getY())){
-        	game.batch.draw(back2, 50, 281);
+        	batch.draw(back2, 50, 181);
         	if(Gdx.input.justTouched()){
         		game.setScreen(new StartMenu(game));
         	}
         }
         
-        game.batch.end();
+        batch.end();
     }
 		
 

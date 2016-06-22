@@ -695,18 +695,13 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 			game.setScreen(new PauseScreen(game,this));
 		}
 		
-		if(p1.getLives()==0 && p2.getLives()==0 && p3.getLives() == 0){
-			game.setScreen(new GameOverScreen(game, 4));
-		}
-		else if(p1.getLives()==0 && p2.getLives()==0 && p4.getLives() == 0){
-			game.setScreen(new GameOverScreen(game, 3));
-		}
-		else if(p1.getLives()==0 && p3.getLives()==0 && p4.getLives() == 0){
+		if(p1.getLives()==0){
 			game.setScreen(new GameOverScreen(game, 2));
 		}
-		else if(p2.getLives()==0 && p3.getLives()==0 && p4.getLives() == 0){
+		else if(p2.getLives()==0){
 			game.setScreen(new GameOverScreen(game, 1));
 		}
+
 		
 		endRender();
 	}
