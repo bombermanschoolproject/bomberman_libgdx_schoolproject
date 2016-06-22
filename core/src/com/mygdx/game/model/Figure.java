@@ -7,6 +7,7 @@ public class Figure {
 	private int lives;
 //	private int speed;
 	private int bombs;
+	private int bombsplaced;
 	private int bombRange;
 	private boolean kickable;
 	private State currState;
@@ -126,6 +127,18 @@ public class Figure {
 	public void moveDown() {
 		if (y > 1)
 			y--;
+	}
+	
+	public void plusBombsPlaced() {
+		bombsplaced++;
+	}
+	
+	public void minusBombsPlaced() {
+		bombsplaced--;
+	}
+	
+	public int getBombsPlaced() {
+		return bombsplaced;
 	}
 	
 }

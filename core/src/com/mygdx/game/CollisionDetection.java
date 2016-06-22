@@ -12,8 +12,8 @@ public class CollisionDetection {
         this.map = map;
     }
 	
-	public boolean detect(int posx, int posy) {
-		boolean hit = false;
+	public int detect(int posx, int posy) {
+		int hit = 0;
 		
 		for (RectangleMapObject r : map.getLayers().get("Collidable").getObjects().getByType(RectangleMapObject.class)) {
 
@@ -24,7 +24,7 @@ public class CollisionDetection {
 						16);
 				if (Intersector.overlaps(rect, recto))
 				{
-					hit = true;
+					hit = 1;
 				}
 				else {
 					for (RectangleMapObject b : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
@@ -37,13 +37,29 @@ public class CollisionDetection {
 						
 						if (Intersector.overlaps(box, boxx))
 						{
-							hit = true;
+							hit = 2;
+						}
+						else {
+							for (RectangleMapObject c : map.getLayers().get("Bombs").getObjects().getByType(RectangleMapObject.class)) {
+
+								Rectangle bomb = c.getRectangle();
+								Rectangle bombb = new Rectangle(posx*16,
+										posy*16,
+										16,
+										16);
+								
+								if (Intersector.overlaps(bomb, bombb))
+								{
+									hit = 3;
+								}
 						}
 					}
 		
 				}
-		}
+				}
 		
+		
+		}
 		return hit;
 	}
 }

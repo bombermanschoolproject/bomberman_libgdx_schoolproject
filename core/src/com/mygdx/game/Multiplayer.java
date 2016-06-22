@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -26,8 +25,6 @@ import com.mygdx.game.model.Figure;
 import com.mygdx.game.view.PauseScreen;
 
 public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
-
-	 private SpriteBatch batch;
 	 
 	 private Bomberman game;
 	 
@@ -52,8 +49,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	 Figure p4;
 	 Texture p4PNG;
 	 
-	 private BombSpritePair bsp;
-	 
 	 CollisionDetection coll;
 	 DeadDetection dd;
 	
@@ -70,36 +65,29 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	 boolean p3alive = true;
 	 boolean p4alive = true;
 	 
-	 private Sprite sprite;
-	 private List<Sprite> sprites;
-	 private int drawSpritesAfterLayer = 1;
-	 private Sprite p1sprite;
-	 private Sprite p2sprite;
-	 private Sprite p3sprite;
-	 private Sprite p4sprite;
-    
-	 private Sprite bomb1;
-	 private Sprite bomb2;
-	 private Sprite bomb3;
-	 private Sprite bomb4;
-	 private Sprite bomb5;
-	 private Sprite bomb6;
-
-	 private Sprite explosionUpDown;
-
-	 private List<BombSpritePair> bombsprites;
-	 private List<DeadZone> deadzones;
-	 private Sprite grassprite;
-	 private int count=0;
-	 private boolean detectAllowed = true;
-    
-	 private BombDetection bd;
-	 
-	 private int boxCounter;
-	 private Random rnd = new Random();
-	 private int chance;
-	 private Sprite upgradeBomb;
-	 private Sprite upgradeRadius;
+	   private Sprite sprite;
+	   private List<Sprite> sprites;
+	   private int drawSpritesAfterLayer = 1;
+	   private Sprite p1sprite;
+	   private Sprite p2sprite;
+	   private Sprite p3sprite;
+	   private Sprite p4sprite;
+	    
+	   private Sprite bomb1;
+	   private Sprite bomb2;
+	   private Sprite bomb3;
+	   private Sprite bomb4;
+	   private Sprite bomb5;
+	   private Sprite bomb6;
+	    
+	   private List<BombSpritePair> bombsprites;
+	   private List<DeadZone> deadzones;
+	   private int count=0;
+	    
+	   private BombDetection bd;
+	   private Texture txtstart;
+	   private Texture txtvertical;
+	   private Texture txthorizontal;
 	    
 	OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
 
@@ -112,6 +100,9 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		this.coll=new CollisionDetection(map);
 		this.dd=new DeadDetection(map);
 		this.create(playerCount);
+		this.txtvertical = new Texture("Explosion_UpDown.png");
+		this.txtstart = new Texture("Explosion_Middle.png");
+		this.txthorizontal = new Texture("Explosion_LeftRight.png");
 	}
 
 	 private void create(int playerCount) {
@@ -123,23 +114,12 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		bombsprites = new ArrayList<BombSpritePair>();
 		deadzones = new ArrayList<DeadZone>();
 		bd = new BombDetection(this.getMap());
-		grassprite = new Sprite(new Texture("gras.png"));
 		bomb1 = new Sprite(new Texture("bomb.png"));
 		bomb2 = new Sprite(new Texture("bomb2.png"));
 		bomb3 = new Sprite(new Texture("bomb3.png"));
 		bomb4 = new Sprite(new Texture("bomb4.png"));
 		bomb5 = new Sprite(new Texture("bomb5.png"));
 		bomb6 = new Sprite(new Texture("bomb6.png"));
-		explosionUpDown = new Sprite(new Texture("Explosion_UpDown.png"));
-		 
-		//tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
-		// tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
-		// coll = new CollisionDetection(tiledMap);
-		// dd = new DeadDetection(tiledMap);
-		 
-		// tiledSet = tiledMap.getTileSets();
-		
-		 //prop = tiledMap.getProperties();
 		
 		 mapWidth = prop.get("width", Integer.class);
 		 mapHeight = prop.get("height", Integer.class);
@@ -211,228 +191,205 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
     	bombsprites.add(bsp);
     }
 
-//	private void create() {
-//		float w = Gdx.graphics.getWidth();
-//		float h = Gdx.graphics.getHeight();
-//
-//		camera = new OrthographicCamera();
-//		camera.setToOrtho(false, w, h);
-//		camera.update();
-//
-//		texture = new Texture(Gdx.files.internal("figur.png"));
-//		spriteP1 = new spriteP1(texture);
-//
-//		tiledMap = new TmxMapLoader().load("BombermanMap.tmx");
-//		this = new OrthogonalTiledMapRendererWithSprites(tiledMap);
-//		tiledMapRenderer.addSprite(spriteP1);
-//		Gdx.input.setInputProcessor(this);
-//		spriteP1.setPosition(x, y);
-//	}
-
 	 protected void getInputPlayer1() {
 		 if(Gdx.input.isKeyJustPressed(Keys.UP)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP1 = new Sprite(new Texture("P1_Up.png"));
 			 this.addSprite1(spriteP1);
 			 allowed = coll.detect(p1.getX(), p1.getY()+1);
 
 			 
-			 if (allowed == false && p1alive)
+			 if (allowed == 0 && p1alive)
 				 p1.moveUp();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP1 = new Sprite(new Texture("P1_Left.png"));
 			 this.addSprite1(spriteP1);
 			 allowed = coll.detect(p1.getX()-1, p1.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p1alive)
 				 p1.moveLeft();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP1 = new Sprite(new Texture("P1_Right.png"));
 			 this.addSprite1(spriteP1);
 			 allowed = coll.detect(p1.getX()+1, p1.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p1alive)
 				 p1.moveRight();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP1 = new Sprite(new Texture("P1_Down.png"));
 			 this.addSprite1(spriteP1);
 			 allowed = coll.detect(p1.getX(), p1.getY()-1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p1alive)
 				 p1.moveDown();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.SHIFT_RIGHT)) {
-			 Bomb testbomb = new Bomb(p1.getX(), p1.getY(), p1.getBombRange());
-			 BombSpritePair bsp = new BombSpritePair(p1, testbomb);
-			 bsp.dispose();
-			 this.addBombSpritePair(bsp);
-			 
+			 if(p1.getBombsPlaced() < p1.getBombs()) {
+				 if(coll.detect(p1.getX(), p1.getY()) == 0) {
+					 Bomb testbomb = new Bomb(p1.getX(), p1.getY(), p1.getBombRange());
+					 BombSpritePair bsp = new BombSpritePair(p1, testbomb);
+					 bsp.dispose();
+					 
+					 bsp.setRmo(new RectangleMapObject(p1.getX()*16, p1.getY()*16, 16, 16));
+					 map.getLayers().get("Bombs").getObjects().add(bsp.getRmo());
+					 this.addBombSpritePair(bsp);
+					 p1.plusBombsPlaced();
+				 }
+			 }
 		 }
 	 }
 	 
 	 protected void getInputPlayer2() {
 		 if(Gdx.input.isKeyJustPressed(Keys.W)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP2 = new Sprite(new Texture("P2_Up.png"));
 			 this.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX(), p2.getY()+1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p2alive)
 				 p2.moveUp();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.A)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP2 = new Sprite(new Texture("P2_Left.png"));
 			 this.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX()-1, p2.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p2alive)
 				 p2.moveLeft();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.D)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP2 = new Sprite(new Texture("P2_Right.png"));
 			 this.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX()+1, p2.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p2alive)
 				 p2.moveRight();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.S)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP2 = new Sprite(new Texture("P2_Down.png"));
 			 this.addSprite2(spriteP2);
 			 allowed = coll.detect(p2.getX(), p2.getY()-1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p2alive)
 				 p2.moveDown();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT)) {
-			 Bomb testbomb = new Bomb(p2.getX(), p2.getY(), p2.getBombRange());
-			 BombSpritePair bsp = new BombSpritePair(p2, testbomb);
-			 bsp.dispose();
-			 this.addBombSpritePair(bsp);
+			 if(p2.getBombsPlaced() < p2.getBombs()) {
+				 Bomb testbomb = new Bomb(p2.getX(), p2.getY(), p2.getBombRange());
+				 BombSpritePair bsp = new BombSpritePair(p2, testbomb);
+				 bsp.dispose();
+				 bsp.setRmo(new RectangleMapObject(p2.getX()*16, p2.getY()*16, 16, 16));
+				 this.addBombSpritePair(bsp);
+				 p2.plusBombsPlaced();
+			 }
 			 
 		 }
 	 }
 	 
 	 protected void getInputPlayer3() {
 		 if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP3 = new Sprite(new Texture("P3_Up.png"));
 			 this.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX(), p3.getY()+1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p3alive)
 				 p3.moveUp();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_4)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP3 = new Sprite(new Texture("P3_Left.png"));
 			 this.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX()-1, p3.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p3alive)
 				 p3.moveLeft();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP3 = new Sprite(new Texture("P3_Right.png"));
 			 this.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX()+1, p3.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p3alive)
 				 p3.moveRight();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP3 = new Sprite(new Texture("P3_Down.png"));
 			 this.addSprite3(spriteP3);
 			 allowed = coll.detect(p3.getX(), p3.getY()-1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p3alive)
 				 p3.moveDown();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.NUMPAD_7)) {
-			 Bomb testbomb = new Bomb(p3.getX(), p3.getY(), p3.getBombRange());
-			 BombSpritePair bsp = new BombSpritePair(p3, testbomb);
-			 bsp.dispose();
-			 this.addBombSpritePair(bsp);
-			 
+			 if(p3.getBombsPlaced() < p3.getBombs()) {
+				 Bomb testbomb = new Bomb(p3.getX(), p3.getY(), p3.getBombRange());
+				 BombSpritePair bsp = new BombSpritePair(p3, testbomb);
+				 bsp.dispose();
+				 this.addBombSpritePair(bsp);
+				 p3.plusBombsPlaced();
+			 }
 		 }
 	 }
 	 
 	 protected void getInputPlayer4() {
 		 if(Gdx.input.isKeyJustPressed(Keys.I)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP4 = new Sprite(new Texture("P4_Up.png"));
 			 this.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX(), p4.getY()+1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p4alive)
 				 p4.moveUp();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.J)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP4 = new Sprite(new Texture("P4_Left.png"));
 			 this.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX()-1, p4.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p4alive)
 				 p4.moveLeft();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.L)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP4 = new Sprite(new Texture("P4_Right.png"));
 			 this.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX()+1, p4.getY());
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p4alive)
 				 p4.moveRight();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.K)) {
-			 boolean allowed = false;
+			 int allowed = 0;
 			 spriteP4 = new Sprite(new Texture("P4_Down.png"));
 			 this.addSprite4(spriteP4);
 			 allowed = coll.detect(p4.getX(), p4.getY()-1);
 			 
-			 if (allowed == false)
+			 if (allowed == 0 && p4alive)
 				 p4.moveDown();
 		 }
 		 else if(Gdx.input.isKeyJustPressed(Keys.H)) {
-			 Bomb testbomb = new Bomb(p4.getX(), p4.getY(), p4.getBombRange());
-			 BombSpritePair bsp = new BombSpritePair(p4, testbomb);
-			 bsp.dispose();
-			 this.addBombSpritePair(bsp);
-			 
+			 if(p4.getBombsPlaced() < p4.getBombs()) {
+				 Bomb testbomb = new Bomb(p4.getX(), p4.getY(), p4.getBombRange());
+				 BombSpritePair bsp = new BombSpritePair(p4, testbomb);
+				 bsp.dispose();
+				 this.addBombSpritePair(bsp);
+				 p4.plusBombsPlaced();
+			 }
 		 }
 	 }
-	//
-	// @Override
-	// public void show() {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void render(float delta) {
-	// Gdx.gl.glClearColor(0, 0, 0, 1);
-	// Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	// camera.update();
-	// tiledMapRenderer.setView(camera);
-	// tiledMapRenderer.render();
-	// batch.setProjectionMatrix(camera.combined);
-	// batch.begin();
-	// spriteP1.draw(batch);
-	// batch.end();
-	// }
 
 	@Override
 	public void resize(int width, int height) {
@@ -470,77 +427,113 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	}
 	
    public void detectBomb(BombSpritePair bsp) {
-    	detectAllowed = false;
     	
-    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
-    		
+    	for(int i = 0; i <= bsp.getBomb().getStrength() && bsp.getDzaddedDOWN() == 0; i++) {
+    		bsp.setBlockedExplosion(false);
     		RectangleMapObject r = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
     		if (r != null) {
-    			if(!detectAllowed){
-    				map.getLayers().get("Boxes").getObjects().remove(r);
-    			}
-        		grassprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
-        		sprites.add(grassprite);
-        		
-        		//DeadZone
-        		
-    			detectAllowed = true;
+    			map.getLayers().get("Boxes").getObjects().remove(r);
+        		Sprite grasspritee = new Sprite(new Texture("gras.png"));
+    			grasspritee.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
+        		sprites.add(grasspritee);
+        		bsp.setDzaddedDown();
     		}
-    		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
-    	}
-    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
     		
+    		if(coll.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i) == 1) {
+    			//bsp.setDzaddedDown();
+    			bsp.setBlockedExplosion(true);
+    			bsp.setDzaddedDown();
+    		}
+    		
+    		if(bsp.getDzadded() == 0 && bsp.getDzaddedDOWN() == 0) {
+    			if(i == 0)
+    				addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i, txtstart);
+    			else
+    				addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i, txtvertical);
+    		}
+    		else if (bsp.getDzadded() == 0 && !bsp.isBlockedExplosion()){
+    			addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i, txtvertical);
+    		}
+    	}
+    	for(int i = 1; i <= bsp.getBomb().getStrength() && bsp.getDzaddedUP() == 0; i++) {
+    		bsp.setBlockedExplosion(false);
     		RectangleMapObject r = bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
     		if (r != null) {
-    			if(!detectAllowed){
-    				map.getLayers().get("Boxes").getObjects().remove(r);
-    			}
-        		grassprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+i)*16);
-        		sprites.add(grassprite);
-        		
-        		//DeadZone
-        		
-    			detectAllowed = true;
+    			map.getLayers().get("Boxes").getObjects().remove(r);
+        		Sprite grasspritee = new Sprite(new Texture("gras.png"));
+    			grasspritee.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()+i)*16);
+        		sprites.add(grasspritee);
+        		bsp.setDzaddedUp();
     		}
-    		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
-    	}
-    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
     		
-    		RectangleMapObject r = bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY());
-    		if (r != null) {
-    			if(!detectAllowed){
-    				map.getLayers().get("Boxes").getObjects().remove(r);
-    			}
-        		grassprite.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
-        		sprites.add(grassprite);
-        		
-        		//DeadZone
-        		
-    			detectAllowed = true;
+    		if(coll.detect(bsp.getBomb().getX(), bsp.getBomb().getY()+i) == 1) {
+    			bsp.setDzaddedUp();
+    			bsp.setBlockedExplosion(true);
     		}
-    		addDeadZone(bsp.getBomb().getX()-i, bsp.getBomb().getY());
-    	}
-    	for(int i = 0; i <= bsp.getBomb().getStrength() && !detectAllowed; i++) {
     		
+    		if(bsp.getDzadded() == 0 && bsp.getDzaddedUP() == 0) {
+    			addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()+i, txtvertical); 			
+    		}
+    		else if (bsp.getDzadded() == 0 && !bsp.isBlockedExplosion()){
+    			addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()+i, txtvertical);
+    		}
+    	}
+    	for(int i = 1; i <= bsp.getBomb().getStrength() && bsp.getDzaddedRIGHT() == 0; i++) {
+    		bsp.setBlockedExplosion(false);
     		RectangleMapObject r = bd.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY());
     		if (r != null) {
-    			if(!detectAllowed){
-    				map.getLayers().get("Boxes").getObjects().remove(r);
-    			}
-        		grassprite.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
-        		sprites.add(grassprite);
-        		
-        		//DeadZone
-        		
-    			detectAllowed = true;
+    			map.getLayers().get("Boxes").getObjects().remove(r);
+        		Sprite grasspritee = new Sprite(new Texture("gras.png"));
+    			grasspritee.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
+        		sprites.add(grasspritee);
+        		bsp.setDzaddedRight();
     		}
-    		addDeadZone(bsp.getBomb().getX()+i, bsp.getBomb().getY());
+    		
+    		if(coll.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY()) == 1) {
+    			bsp.setDzaddedRight();
+    			bsp.setBlockedExplosion(true);
+    		}
+    		
+    		if(bsp.getDzadded() == 0 && bsp.getDzaddedRIGHT() == 0) {
+    			addDeadZone(bsp.getBomb().getX()+i, bsp.getBomb().getY(), txthorizontal); 			
+    		}
+    		else if (bsp.getDzadded() == 0 && !bsp.isBlockedExplosion()){
+    			addDeadZone(bsp.getBomb().getX()+i, bsp.getBomb().getY(), txthorizontal);
+    		}
     	}
+    	for(int i = 1; i <= bsp.getBomb().getStrength() && bsp.getDzaddedLEFT() == 0; i++) {
+    		bsp.setBlockedExplosion(false);
+    		RectangleMapObject r = bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY());
+    		if (r != null) {
+    			map.getLayers().get("Boxes").getObjects().remove(r);
+        		Sprite grasspritee = new Sprite(new Texture("gras.png"));
+    			grasspritee.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
+        		sprites.add(grasspritee);
+        		bsp.setDzaddedLeft();
+    		}
+    		
+    		if(coll.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY()) == 1) {
+    			bsp.setDzaddedLeft();
+    			bsp.setBlockedExplosion(true);
+    		}
+    		
+    		if(bsp.getDzadded() == 0 && bsp.getDzaddedLEFT() == 0) {
+    			addDeadZone(bsp.getBomb().getX()-i, bsp.getBomb().getY(), txthorizontal); 			
+    		}
+    		else if (bsp.getDzadded() == 0 && !bsp.isBlockedExplosion()){
+    			addDeadZone(bsp.getBomb().getX()-i, bsp.getBomb().getY(), txthorizontal);
+    		}
+    	}
+    	if(bsp.getDzadded() == 0)
+    		bsp.getFigure().minusBombsPlaced();
+    	
+    	bsp.setDzadded();
     }
 	    
-    public void addDeadZone(int x, int y) {
+    public void addDeadZone(int x, int y, Texture txt) {
     	DeadZone dz = new DeadZone(x, y);
     	
+    	Sprite explosionUpDown = new Sprite(txt);
 		explosionUpDown.setPosition(dz.getX()*16, dz.getY()*16);
 		dz.setSprite(explosionUpDown);
 		dz.setRmo(new RectangleMapObject(dz.getX()*16, dz.getY()*16, 16, 16));
@@ -549,7 +542,7 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
     }
     
     public boolean checkDeadZone(DeadZone dz) {
-    	if(dz.timeLeft() == 0) {
+    	if(dz.timeLeft() <= 0) {
     		map.getLayers().get("DeadZones").getObjects().remove(dz.getRmo());
     		return true;
     	}
@@ -567,12 +560,11 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		this.setView(camera);
 		beginRender();
 		
-		int currentLayer = 0;
+
         for (MapLayer layer : map.getLayers()) {
             if (layer.isVisible()) {
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer)layer);
-                    currentLayer++;
                   //  if(currentLayer == drawSpritesAfterLayer){
                         for(Sprite sprite : sprites)
                             sprite.draw(this.getBatch());
@@ -587,53 +579,20 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         }
 	          
 		for(BombSpritePair bsp : bombsprites) {
-			detectAllowed=true;
 			if(bsp.getBomb().timeLeft() != 0)
 				bsp.getSprite().draw(this.getBatch());
 			else {
-				if(detectAllowed) {
-					//addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY());
 					detectBomb(bsp);
-					detectAllowed = false;
-				}
+					if(bsp.getDzadded() > 0)
+						map.getLayers().get("Bombs").getObjects().remove(bsp.getRmo());
 			}
-	        		
-	        		
-//	        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
-//		        		if(bd.detect(bsp.getBomb().getX(), bsp.getBomb().getY()-i)){
-//		        			Sprite sprite = new Sprite(new Texture("gras.png"));
-//		            		sprite.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
-//		            		sprites.add(sprite);
-//		            		end = true;
-//			    		}
-//	        		}
-//	        		
-//	        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
-//	        			if(bd.detect(bsp.getBomb().getX()+i, bsp.getBomb().getY())) {
-//	        				Sprite sprite = new Sprite(new Texture("gras.png"));
-//	        				sprite.setPosition((bsp.getBomb().getX()+i)*16, bsp.getBomb().getY()*16);
-//	        				sprites.add(sprite);
-//	        				end = true;
-//	        			}
-//		    		}
-//	        		end = false;
-//	        		for(i = 1; i <= bsp.getBomb().getStrength() && !end; i++) {
-//	        			if(bd.detect(bsp.getBomb().getX()-i, bsp.getBomb().getY())){
-//	        				Sprite sprite = new Sprite(new Texture("gras.png"));
-//	        				sprite.setPosition((bsp.getBomb().getX()-i)*16, bsp.getBomb().getY()*16);
-//	        				sprites.add(sprite);
-//	        				end = true;
-//	        			}
-//	        		}
-	        		
-	        		//bombsprites.remove(bsp);
 		}
 	        
         for (DeadZone dz : deadzones) {
         	if(checkDeadZone(dz) == false)
         		dz.getSprite().draw(this.getBatch());
         }
-        
+//        
         if(p1sprite!=null)p1sprite.draw(this.getBatch());	
         if(p2sprite!=null)p2sprite.draw(this.getBatch());
         if(p3sprite!=null)p3sprite.draw(this.getBatch());
@@ -643,8 +602,10 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 			getInputPlayer1();
 			p1alive = dd.detect(p1.getX(), p1.getY());
 		}
-		getInputPlayer2();
-		p2alive = dd.detect(p2.getX(), p2.getY());
+		if(p2alive) {
+			getInputPlayer2();
+			p2alive = dd.detect(p2.getX(), p2.getY());
+		}
 		if(spriteP3!=null) {
 			getInputPlayer3();
 			p3alive = dd.detect(p3.getX(), p3.getY());
@@ -659,7 +620,11 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		else
 			this.addSprite1(null);
 		
-		spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
+		if(p2alive)
+			spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
+		else
+			this.addSprite2(null);
+		
 		if(spriteP3!=null && p3alive)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
 		if(spriteP4!=null && p4alive)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
 	
