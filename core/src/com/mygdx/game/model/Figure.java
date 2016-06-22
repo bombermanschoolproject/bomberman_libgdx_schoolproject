@@ -157,5 +157,4 @@ public class Figure {
 		if(invulnerable == true && (System.currentTimeMillis() - invul_starttime) > invul_time)
 			invulnerable = false;
 	}
-	
 }

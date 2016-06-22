@@ -438,4 +438,5 @@
  </objectgroup>
  <objectgroup name="DeadZones"/>
  <objectgroup name="Bombs"/>
+ <objectgroup name="Upgrades"/>
 </map>

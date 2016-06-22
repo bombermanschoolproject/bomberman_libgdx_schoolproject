@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -83,15 +84,20 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	    
 	   private List<BombSpritePair> bombsprites;
 	   private List<DeadZone> deadzones;
+	   private List<Upgrade> upgrades;
 	   private int count=0;
 	    
 	   private BombDetection bd;
 	   private Texture txtstart;
 	   private Texture txtvertical;
 	   private Texture txthorizontal;
+	   private Texture upgrade1;
+	   private Texture upgrade2;
 	    
 	OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
 
+	Random rand;
+	int randint;
 
 	public Multiplayer(TiledMap map, Bomberman game, int playerCount) {
 		super(map);
@@ -104,6 +110,9 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		this.txtvertical = new Texture("Explosion_UpDown.png");
 		this.txtstart = new Texture("Explosion_Middle.png");
 		this.txthorizontal = new Texture("Explosion_LeftRight.png");
+		this.rand = new Random();
+		this.upgrade1 = new Texture("PlusBomb.png");
+		this.upgrade2 = new Texture("PlusExplosion.png");
 	}
 
 	 private void create(int playerCount) {
@@ -114,6 +123,7 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		sprites = new ArrayList<Sprite>();
 		bombsprites = new ArrayList<BombSpritePair>();
 		deadzones = new ArrayList<DeadZone>();
+		upgrades = new ArrayList<Upgrade>();
 		bd = new BombDetection(this.getMap());
 		bomb1 = new Sprite(new Texture("bomb.png"));
 		bomb2 = new Sprite(new Texture("bomb2.png"));
@@ -437,6 +447,27 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         		Sprite grasspritee = new Sprite(new Texture("gras.png"));
     			grasspritee.setPosition(bsp.getBomb().getX()*16, (bsp.getBomb().getY()-i)*16);
         		sprites.add(grasspritee);
+  
+        		if((rand.nextInt(2)+1) == 1) {
+        			Upgrade up = new Upgrade(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
+        	    	Sprite upgrade;
+        	    	if(up.getUpgradeType() == 1) {
+        				 upgrade = new Sprite(upgrade1);
+        	    	}
+        	    	else
+        				upgrade = new Sprite(upgrade2);
+        			
+        			
+        			
+	        		upgrade.setPosition(up.getX()*16, up.getY()*16);
+	        		up.setSprite(upgrade);
+	        		RectangleMapObject rmo = new RectangleMapObject(up.getX()*16, up.getY()*16, 16, 16);
+	        		rmo.getProperties().put("Type", up.getUpgradeType());
+	        		up.setRmo(rmo);
+	        		map.getLayers().get("Upgrades").getObjects().add(up.getRmo());
+	        		upgrades.add(up);
+	        
+        		}
         		bsp.setDzaddedDown();
     		}
     		
@@ -592,6 +623,11 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         for (DeadZone dz : deadzones) {
         	if(checkDeadZone(dz) == false)
         		dz.getSprite().draw(this.getBatch());
+        }
+        
+        for (Upgrade up : upgrades) {
+        	if(!up.isPickedUp())
+        		up.getSprite().draw(this.getBatch());
         }
 //        
         if(p1sprite!=null)p1sprite.draw(this.getBatch());	

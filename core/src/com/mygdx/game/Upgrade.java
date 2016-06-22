@@ -12,7 +12,7 @@ public class Upgrade {
 	private int y;
 	private Sprite sprite;
 	private RectangleMapObject rmo;
-	private boolean pickedUp = false; 
+	private boolean pickedUp; 
 	
 	private Random rand;
 
@@ -21,6 +21,7 @@ public class Upgrade {
 		this.y=ypos;
 		rand = new Random();
 		upgradeType = 1+rand.nextInt(2); 
+		pickedUp = false;
 	}
 	
 	public int getUpgradeType() {
@@ -56,5 +57,17 @@ public class Upgrade {
 
 	public void setRmo(RectangleMapObject rmo) {
 		this.rmo = rmo;
+	}
+
+	public boolean isPickedUp() {
+		return pickedUp;
+	}
+
+	public void setPickedUp() {
+		this.pickedUp = true;
+	}
+	
+	public void setUpgradeType() {
+		upgradeType = 1;
 	}
 }
