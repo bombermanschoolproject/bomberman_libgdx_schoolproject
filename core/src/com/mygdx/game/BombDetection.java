@@ -13,7 +13,6 @@ public class BombDetection {
     }
 	
 	public RectangleMapObject detect(int posx, int posy) {	
-		boolean hit = false;
 		for (RectangleMapObject r : map.getLayers().get("Boxes").getObjects().getByType(RectangleMapObject.class)) {
 
 				Rectangle rect = r.getRectangle();

@@ -2,6 +2,7 @@ package com.mygdx.game.control;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.model.Bomb;
 import com.mygdx.game.model.Figure;
@@ -11,7 +12,7 @@ public class BombSpritePair implements Disposable{
 	private Bomb bomb;
 	
 	private Figure figure;
-	
+
 	private int x;
 	private int y;
 	
@@ -23,6 +24,24 @@ public class BombSpritePair implements Disposable{
 	private Sprite sprite5;
 	private Sprite sprite6;
 	
+	private int dzadded;
+	private int dzaddedLEFT;
+	private int dzaddedRIGHT;
+	private int dzaddedDOWN;
+	private int dzaddedUP;
+	
+	private boolean blockedExplosion;
+	
+	private RectangleMapObject rmo;
+	
+	public int getDzadded() {
+		return dzadded;
+	}
+
+	public void setDzadded() {
+		dzadded++;
+	}
+
 	private long startTime=System.currentTimeMillis();
 	
 	public BombSpritePair(Figure figure, Bomb bomb) {
@@ -38,6 +57,8 @@ public class BombSpritePair implements Disposable{
 		this.sprite4=new Sprite(new Texture("bomb4.png"));
 		this.sprite5=new Sprite(new Texture("bomb5.png"));
 		this.sprite6=new Sprite(new Texture("bomb6.png"));
+		
+		blockedExplosion = false;
 	}
 	
 	public Bomb getBomb() {
@@ -86,5 +107,55 @@ public class BombSpritePair implements Disposable{
 		if(System.currentTimeMillis()-startTime>5000)
 			this.dispose();
 	}
+	
+	public Figure getFigure() {
+		return figure;
+	}
 
+	public void setDzaddedLeft() {
+		dzaddedLEFT++;
+	}
+	public void setDzaddedRight() {
+		dzaddedRIGHT++;
+	}
+	public void setDzaddedUp() {
+		dzaddedUP++;
+	}
+	public void setDzaddedDown() {
+		dzaddedDOWN++;
+	}
+
+	public int getDzaddedLEFT() {
+		return dzaddedLEFT;
+	}
+
+	public int getDzaddedRIGHT() {
+		return dzaddedRIGHT;
+	}
+
+	public int getDzaddedDOWN() {
+		return dzaddedDOWN;
+	}
+
+	public int getDzaddedUP() {
+		return dzaddedUP;
+	}
+	
+	public RectangleMapObject getRmo() {
+		return rmo;
+	}
+
+	public void setRmo(RectangleMapObject rmo) {
+		this.rmo = rmo;
+	}
+
+	public boolean isBlockedExplosion() {
+		return blockedExplosion;
+	}
+
+	public void setBlockedExplosion(boolean blockedExplosion) {
+		this.blockedExplosion = blockedExplosion;
+	}
+	
+	
 }
