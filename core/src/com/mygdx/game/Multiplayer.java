@@ -299,6 +299,7 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 				 BombSpritePair bsp = new BombSpritePair(p2, testbomb);
 				 bsp.dispose();
 				 bsp.setRmo(new RectangleMapObject(p2.getX()*16, p2.getY()*16, 16, 16));
+				 map.getLayers().get("Bombs").getObjects().add(bsp.getRmo());
 				 this.addBombSpritePair(bsp);
 				 p2.plusBombsPlaced();
 			 }
@@ -348,6 +349,8 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 				 Bomb testbomb = new Bomb(p3.getX(), p3.getY(), p3.getBombRange());
 				 BombSpritePair bsp = new BombSpritePair(p3, testbomb);
 				 bsp.dispose();
+				 bsp.setRmo(new RectangleMapObject(p3.getX()*16, p3.getY()*16, 16, 16));
+				 map.getLayers().get("Bombs").getObjects().add(bsp.getRmo());
 				 this.addBombSpritePair(bsp);
 				 p3.plusBombsPlaced();
 			 }
@@ -396,6 +399,8 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 				 Bomb testbomb = new Bomb(p4.getX(), p4.getY(), p4.getBombRange());
 				 BombSpritePair bsp = new BombSpritePair(p4, testbomb);
 				 bsp.dispose();
+				 bsp.setRmo(new RectangleMapObject(p4.getX()*16, p4.getY()*16, 16, 16));
+				 map.getLayers().get("Bombs").getObjects().add(bsp.getRmo());
 				 this.addBombSpritePair(bsp);
 				 p4.plusBombsPlaced();
 			 }
