@@ -22,6 +22,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.control.BombSpritePair;
 import com.mygdx.game.model.Bomb;
 import com.mygdx.game.model.Figure;
+import com.mygdx.game.view.GameOverScreen;
 import com.mygdx.game.view.PauseScreen;
 
 public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
@@ -632,6 +633,20 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.setScreen(new PauseScreen(game,this));
 		}
+		
+		if(p1.getLives()==0 && p2.getLives()==0 && p3.getLives() == 0){
+			game.setScreen(new GameOverScreen(game, 4));
+		}
+		else if(p1.getLives()==0 && p2.getLives()==0 && p4.getLives() == 0){
+			game.setScreen(new GameOverScreen(game, 3));
+		}
+		else if(p1.getLives()==0 && p3.getLives()==0 && p4.getLives() == 0){
+			game.setScreen(new GameOverScreen(game, 2));
+		}
+		else if(p2.getLives()==0 && p3.getLives()==0 && p4.getLives() == 0){
+			game.setScreen(new GameOverScreen(game, 1));
+		}
+		
 		endRender();
 	}
 
