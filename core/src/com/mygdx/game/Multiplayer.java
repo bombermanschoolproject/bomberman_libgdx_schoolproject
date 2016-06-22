@@ -599,36 +599,61 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         if(p3sprite!=null)p3sprite.draw(this.getBatch());
         if(p4sprite!=null)p4sprite.draw(this.getBatch());
         
-		if(p1alive) {
+		if(p1.getLives() != 0) {
 			getInputPlayer1();
-			p1alive = dd.detect(p1.getX(), p1.getY());
+			p1.checkInvulnerability();
+			if(dd.detect(p1.getX(), p1.getY()) && !p1.isInvulnerable()) {
+				p1.setLives(p1.getLives()-1);
+				p1.setInvulnerable();
+			}
 		}
-		if(p2alive) {
+		if(p2.getLives() != 0) {
 			getInputPlayer2();
-			p2alive = dd.detect(p2.getX(), p2.getY());
+			
+			p2.checkInvulnerability();
+			if(dd.detect(p2.getX(), p2.getY()) && !p2.isInvulnerable()) {
+				p2.setLives(p2.getLives()-1);
+				p2.setInvulnerable();
+			}
 		}
-		if(spriteP3!=null) {
+		if(spriteP3!=null && p3.getLives() != 0) {
 			getInputPlayer3();
-			p3alive = dd.detect(p3.getX(), p3.getY());
+			
+			p3.checkInvulnerability();
+			if(dd.detect(p3.getX(), p3.getY()) && !p3.isInvulnerable()) {
+				p3.setLives(p3.getLives()-1);
+				p3.setInvulnerable();
+			}
 		}
-		if(spriteP4!=null) {
+		if(spriteP4!=null && p4.getLives() != 0) {
 			getInputPlayer4();
-			p4alive = dd.detect(p4.getX(), p4.getY());
+
+			p4.checkInvulnerability();
+			if(dd.detect(p4.getX(), p4.getY()) && !p4.isInvulnerable()) {
+				p4.setLives(p4.getLives()-1);
+				p4.setInvulnerable();
+			}
 		}
 		
-		if(p1alive)
+		if(p1.getLives() != 0)
 			spriteP1.setPosition(p1.getX()*16, p1.getY()*16);
 		else
 			this.addSprite1(null);
 		
-		if(p2alive)
+		if(p2.getLives() != 0)
 			spriteP2.setPosition(p2.getX()*16, p2.getY()*16);
 		else
 			this.addSprite2(null);
 		
-		if(spriteP3!=null && p3alive)spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
-		if(spriteP4!=null && p4alive)spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
-	
+		if(spriteP3!=null && p3.getLives() != 0)
+			spriteP3.setPosition(p3.getX()*16, p3.getY()*16);
+		else
+			this.addSprite3(null);
+		
+		if(spriteP4!=null && p4.getLives() != 0)
+			spriteP4.setPosition(p4.getX()*16, p4.getY()*16);
+		else
+			this.addSprite4(null);
 	
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.setScreen(new PauseScreen(game,this));
