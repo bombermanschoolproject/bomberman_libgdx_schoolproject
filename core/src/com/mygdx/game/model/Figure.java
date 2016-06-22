@@ -12,6 +12,9 @@ public class Figure {
 	private boolean kickable;
 	private State currState;
 	private Direction directionState;
+	private boolean invulnerable;
+	private long invul_starttime;
+	private final int invul_time = 3000; 
 	
 	public enum Direction{
 		LEFT, RIGHT, UP, DOWN
@@ -139,6 +142,20 @@ public class Figure {
 	
 	public int getBombsPlaced() {
 		return bombsplaced;
+	}
+
+	public void setInvulnerable() {
+		invulnerable = true;
+		invul_starttime = System.currentTimeMillis();
+	}
+	
+	public boolean isInvulnerable() {
+		return invulnerable;
+	}
+	
+	public void checkInvulnerability() {
+		if(invulnerable == true && (System.currentTimeMillis() - invul_starttime) > invul_time)
+			invulnerable = false;
 	}
 	
 }

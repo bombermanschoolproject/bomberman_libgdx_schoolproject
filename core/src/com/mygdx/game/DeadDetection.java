@@ -13,7 +13,7 @@ public class DeadDetection {
     }
 	
 	public boolean detect(int posx, int posy) {
-		boolean hit = true;
+		boolean hit = false;
 		
 		for (RectangleMapObject r : map.getLayers().get("DeadZones").getObjects().getByType(RectangleMapObject.class)) {
 
@@ -24,7 +24,7 @@ public class DeadDetection {
 						16);
 				if (Intersector.overlaps(rect, recto))
 				{
-					hit = false;
+					hit = true;
 				}
 		}
 		
