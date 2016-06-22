@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.control.BombSpritePair;
 import com.mygdx.game.model.Bomb;
@@ -70,30 +70,36 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	 boolean p3alive = true;
 	 boolean p4alive = true;
 	 
-	   private Sprite sprite;
-	    private List<Sprite> sprites;
-	    private int drawSpritesAfterLayer = 1;
-	    private Sprite p1sprite;
-	    private Sprite p2sprite;
-	    private Sprite p3sprite;
-	    private Sprite p4sprite;
-	    
-	    private Sprite bomb1;
-	    private Sprite bomb2;
-	    private Sprite bomb3;
-	    private Sprite bomb4;
-	    private Sprite bomb5;
-	    private Sprite bomb6;
-	    
-	    private Sprite explosionUpDown;
-	    
-	    private List<BombSpritePair> bombsprites;
-	    private List<DeadZone> deadzones;
-	    private Sprite grassprite;
-	    private int count=0;
-	    private boolean detectAllowed = true;
-	    
-	    private BombDetection bd;
+	 private Sprite sprite;
+	 private List<Sprite> sprites;
+	 private int drawSpritesAfterLayer = 1;
+	 private Sprite p1sprite;
+	 private Sprite p2sprite;
+	 private Sprite p3sprite;
+	 private Sprite p4sprite;
+    
+	 private Sprite bomb1;
+	 private Sprite bomb2;
+	 private Sprite bomb3;
+	 private Sprite bomb4;
+	 private Sprite bomb5;
+	 private Sprite bomb6;
+
+	 private Sprite explosionUpDown;
+
+	 private List<BombSpritePair> bombsprites;
+	 private List<DeadZone> deadzones;
+	 private Sprite grassprite;
+	 private int count=0;
+	 private boolean detectAllowed = true;
+    
+	 private BombDetection bd;
+	 
+	 private int boxCounter;
+	 private Random rnd = new Random();
+	 private int chance;
+	 private Sprite upgradeBomb;
+	 private Sprite upgradeRadius;
 	    
 	OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
 
@@ -478,7 +484,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         		
         		//DeadZone
         		
-    			
     			detectAllowed = true;
     		}
     		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()-i);
@@ -495,7 +500,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         		
         		//DeadZone
         		
-    			
     			detectAllowed = true;
     		}
     		addDeadZone(bsp.getBomb().getX(), bsp.getBomb().getY()+i);
@@ -512,7 +516,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         		
         		//DeadZone
         		
-    			
     			detectAllowed = true;
     		}
     		addDeadZone(bsp.getBomb().getX()-i, bsp.getBomb().getY());
@@ -529,7 +532,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         		
         		//DeadZone
         		
-    			
     			detectAllowed = true;
     		}
     		addDeadZone(bsp.getBomb().getX()+i, bsp.getBomb().getY());
