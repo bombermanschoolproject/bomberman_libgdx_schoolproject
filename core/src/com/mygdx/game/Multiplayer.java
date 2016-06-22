@@ -3,7 +3,6 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -39,7 +38,6 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	 TiledMap tiledMap;
 	 TiledMapTileSets tiledSet;
 	 OrthographicCamera camera;
-//	 TiledMapRenderer tiledMapRenderer;
 	 MapProperties prop;
 	
 	 Figure p1;
@@ -601,10 +599,8 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
             if (layer.isVisible()) {
                 if (layer instanceof TiledMapTileLayer) {
                     renderTileLayer((TiledMapTileLayer)layer);
-                  //  if(currentLayer == drawSpritesAfterLayer){
                         for(Sprite sprite : sprites)
                             sprite.draw(this.getBatch());
-                   // }
                 } else {
                     for (MapObject object : layer.getObjects()) {
                         renderObject(object);
