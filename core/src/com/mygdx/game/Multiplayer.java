@@ -53,6 +53,7 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	 
 	 CollisionDetection coll;
 	 DeadDetection dd;
+	 UpgradeDetection ud;
 	
 	 int mapWidth;
 	 int mapHeight;
@@ -106,6 +107,7 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 		this.prop=map.getProperties();
 		this.coll=new CollisionDetection(map);
 		this.dd=new DeadDetection(map);
+		this.ud = new UpgradeDetection(map);
 		this.create(playerCount);
 		this.txtvertical = new Texture("Explosion_UpDown.png");
 		this.txtstart = new Texture("Explosion_Middle.png");
@@ -462,11 +464,13 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
 	        		upgrade.setPosition(up.getX()*16, up.getY()*16);
 	        		up.setSprite(upgrade);
 	        		RectangleMapObject rmo = new RectangleMapObject(up.getX()*16, up.getY()*16, 16, 16);
-	        		rmo.getProperties().put("Type", up.getUpgradeType());
+	        		
 	        		up.setRmo(rmo);
-	        		map.getLayers().get("Upgrades").getObjects().add(up.getRmo());
 	        		upgrades.add(up);
-	        
+	        		
+	        		up.getRmo().getProperties().put("Type", up.getUpgradeType());
+	        		up.getRmo().getProperties().put("Index", upgrades.indexOf(up));
+	        		map.getLayers().get("Upgrades").getObjects().add(up.getRmo());
         		}
         		bsp.setDzaddedDown();
     		}
@@ -637,6 +641,19 @@ public class Multiplayer extends OrthogonalTiledMapRenderer implements Screen{
         
 		if(p1.getLives() != 0) {
 			getInputPlayer1();
+			RectangleMapObject r = ud.detect(p1.getX(), p1.getY());
+			if(r != null) {
+				if(Integer.parseInt(r.getProperties().get("Type").toString()) == 1) {
+					p1.setBombs(p1.getBombs()+1);
+					upgrades.get((Integer) r.getProperties().get("Index")).setPickedUp();
+				}
+				else
+				{
+					p1.setBombRange(p1.getBombRange()+1);
+					upgrades.get((Integer) r.getProperties().get("Index")).setPickedUp();
+				}
+			}
+			
 			p1.checkInvulnerability();
 			if(dd.detect(p1.getX(), p1.getY()) && !p1.isInvulnerable()) {
 				p1.setLives(p1.getLives()-1);

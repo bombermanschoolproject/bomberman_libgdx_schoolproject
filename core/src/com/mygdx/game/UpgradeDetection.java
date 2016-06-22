@@ -12,7 +12,7 @@ public class UpgradeDetection {
         this.map = map;
     }
 	
-	public int detect(int posx, int posy) {	
+	public RectangleMapObject detect(int posx, int posy) {	
 		for (RectangleMapObject r : map.getLayers().get("Upgrades").getObjects().getByType(RectangleMapObject.class)) {
 
 				Rectangle rect = r.getRectangle();
@@ -22,10 +22,10 @@ public class UpgradeDetection {
 						16);
 				if (Intersector.overlaps(rect, recto))
 				{
-					
-					return Integer.parseInt(r.getProperties().get("Type").toString());
+					map.getLayers().get("Upgrades").getObjects().remove(r);
+					return r;
 				}
 		}
-		return 0;
+		return null;
 	}
 }
